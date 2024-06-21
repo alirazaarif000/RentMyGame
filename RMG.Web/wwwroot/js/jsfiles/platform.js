@@ -5,17 +5,17 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         ajax: {
-            "url": '/admin/genre/getall',
+            "url": '/admin/platform/getall',
             "type": 'GET'
         },
         columns: [
-            { data: "genreName", "width": "50%" },
+            { data: "platformName", "width": "50%" },
             {
                 data: "id",
                 "render": function (data) {
                     return `<div class="w-75 " role="group">
-                        <a href="/admin/genre/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="fa fa-edit"></i> Edit</a>
-                        <a OnClick=Delete("/admin/genre/delete/${data}") class="btn btn-danger mx-2"> <i class="fa fa-trash"></i> Delete</a>
+                        <a href="/admin/platform/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="fa fa-edit"></i> Edit</a>
+                        <a OnClick=Delete("/admin/platform/delete/${data}") class="btn btn-danger mx-2"> <i class="fa fa-trash"></i> Delete</a>
                     </div>`
                 },
                 "width":"50%"

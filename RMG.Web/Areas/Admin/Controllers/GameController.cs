@@ -6,12 +6,12 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class GenreController : Controller
+    public class GameController : Controller
     {
-        private readonly GenreBll _genreBll;
-        public GenreController(GenreBll genreBll) 
+        private readonly GameBll _gameBll;
+        public GameController(GameBll gameBll) 
         {
-            _genreBll = genreBll;    
+            _gameBll = gameBll;    
         }
         public IActionResult Index()
         {
@@ -23,34 +23,34 @@ namespace RMG.Web.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 //create
-                return View(new Genre());
+                return View(new Game());
             }
             else
             {
                 //update
-                Result<Genre> genre = _genreBll.GetGenre(id);
-                return View(genre.Data);
+                Result<Game> game = _gameBll.GetGame(id);
+                return View(game.Data);
             }
         }
         [HttpPost]  
-        public IActionResult Upsert(Genre genre) 
+        public IActionResult Upsert(Game game) 
         {
             if (ModelState.IsValid)
             {
-                if (genre.Id == 0)
+                if (game.Id == 0)
                 {
-                    _genreBll.AddGenre(genre);
+                    _gameBll.AddGame(game);
                 }
                 else
                 {
-                    _genreBll.UpdateGenre(genre);
+                    _gameBll.UpdateGame(game);
                 }
-                TempData["success"] = "Genre Successfully Created";
+                TempData["success"] = "Game Successfully Created";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(genre);
+                return View(game);
             }
         }
 
@@ -59,14 +59,14 @@ namespace RMG.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Genres = _genreBll.GetAllGenre();
-            return Json(Genres);
+            var Games = _gameBll.GetAllGame();
+            return Json(Games);
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var result= _genreBll.DeleteGenre(id);
+            var result= _gameBll.DeleteGame(id);
             return Json(result);
         }
 

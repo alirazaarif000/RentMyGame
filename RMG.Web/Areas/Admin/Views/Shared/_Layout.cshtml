@@ -36,6 +36,8 @@
 
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -231,7 +233,7 @@
                             </a>
                         </li>
 
-                        <li>
+                      @*   <li>
                             <a class="sidebar-header" href="javascript:void(0)">
                                 <i data-feather="box"></i>
                                 <span>Products</span>
@@ -320,34 +322,34 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> *@
 
                         <li>
                             <a class="sidebar-header" href="javascript:void(0)">
                                 <i data-feather="archive"></i>
-                                <span>Orders</span>
+                                <span>Games</span>
                                 <i class="fa fa-angle-right pull-right"></i>
                             </a>
 
                             <ul class="sidebar-submenu">
                                 <li>
-                                    <a href="order-list.html">
+                                    <a asp-controller="Genre" asp-action="Index">
                                         <i class="fa fa-circle"></i>
-                                        <span>Order List</span>
+                                        <span>Genre</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="order-tracking.html">
+                                    <a asp-controller="Platform" asp-action="Index">
                                         <i class="fa fa-circle"></i>
-                                        <span>Order Tracking</span>
+                                        <span>Platform</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="order-detail.html">
+                                    <a asp-controller="Game" asp-action="Index">
                                         <i class="fa fa-circle"></i>
-                                        <span>Order Details</span>
+                                        <span>Games List</span>
                                     </a>
                                 </li>
                             </ul>
@@ -385,6 +387,7 @@
             <!-- Page Sidebar Ends-->
 
             <div class="page-body">
+                <partial name="_Notification" />
                     @RenderBody()
             </div>
         </div>
@@ -400,8 +403,9 @@
             &copy; 2024 - RMG.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer> *@
-@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@*     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+
     <!-- latest jquery-->
     <script src="~/js/jquery-3.3.1.min.js"></script>
 
@@ -415,7 +419,22 @@
     <!-- Sidebar jquery-->
     <script src="~/js/sidebar-menu.js"></script>
 
+    <!--dropzone js-->
+    <script src="~/js/dropzone/dropzone.js"></script>
+    <script src="~/js/dropzone/dropzone-script.js"></script>
+
+    <!--ckeditor js-->
+    <script src="~/js/editor/ckeditor/ckeditor.js"></script>
+    <script src="~/js/editor/ckeditor/ckeditor.custom.js"></script>
+
+    <!-- lazyload js-->
+    <script src="assets/js/lazysizes.min.js"></script>
+
+    <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @*     <script src="~/js/site.js" asp-append-version="true"></script> *@
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

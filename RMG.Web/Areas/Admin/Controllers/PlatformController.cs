@@ -6,12 +6,12 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class GenreController : Controller
+    public class PlatformController : Controller
     {
-        private readonly GenreBll _genreBll;
-        public GenreController(GenreBll genreBll) 
+        private readonly PlatformBll _platformBll;
+        public PlatformController(PlatformBll platformBll) 
         {
-            _genreBll = genreBll;    
+            _platformBll = platformBll;    
         }
         public IActionResult Index()
         {
@@ -23,34 +23,34 @@ namespace RMG.Web.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 //create
-                return View(new Genre());
+                return View(new Platform());
             }
             else
             {
                 //update
-                Result<Genre> genre = _genreBll.GetGenre(id);
-                return View(genre.Data);
+                Result<Platform> platform = _platformBll.GetPlatform(id);
+                return View(platform.Data);
             }
         }
         [HttpPost]  
-        public IActionResult Upsert(Genre genre) 
+        public IActionResult Upsert(Platform platform) 
         {
             if (ModelState.IsValid)
             {
-                if (genre.Id == 0)
+                if (platform.Id == 0)
                 {
-                    _genreBll.AddGenre(genre);
+                    _platformBll.AddPlatform(platform);
                 }
                 else
                 {
-                    _genreBll.UpdateGenre(genre);
+                    _platformBll.UpdatePlatform(platform);
                 }
-                TempData["success"] = "Genre Successfully Created";
+                TempData["success"] = "Platform Successfully Created";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(genre);
+                return View(platform);
             }
         }
 
@@ -59,14 +59,14 @@ namespace RMG.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Genres = _genreBll.GetAllGenre();
-            return Json(Genres);
+            var Platforms = _platformBll.GetAllPlatform();
+            return Json(Platforms);
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var result= _genreBll.DeleteGenre(id);
+            var result= _platformBll.DeletePlatform(id);
             return Json(result);
         }
 

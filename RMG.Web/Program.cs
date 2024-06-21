@@ -1,11 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using RMG.BLL;
 using RMG.DAL;
+using RMG.DAL.Repository;
+using RMG.DAL.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<GenreBll>();
+builder.Services.AddScoped<PlatformBll>();
+builder.Services.AddScoped<GameBll>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

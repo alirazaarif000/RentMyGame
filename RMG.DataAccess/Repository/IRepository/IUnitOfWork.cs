@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace RMG.DAL.Repository.IRepository
 {
-    public class IUnitOfWork
+    public interface IUnitOfWork
     {
         IGenreRepository Genre { get; }
+        IPlatformRepository Platform { get; }
+        IGameRepository Game { get; }
+       
+        void Save();
     }
 }
