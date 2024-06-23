@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>@ViewData["Title"] - RMG.Web</title>
+	@*     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RMG.Web.styles.css" asp-append-version="true" /> *@
+
+	<!--Google font-->
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/font-awesome.css">
+
+	<!--Slick slider css-->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/slick.css">
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/slick-theme.css">
+
+	<!-- Animate icon -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/animate.css">
+
+	<!-- Animate icon -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/animate.css">
+
+	<!-- Themify icon -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/themify-icons.css">
+
+	<!-- Bootstrap css -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/vendors/bootstrap.css">
+
+	<!-- Theme css -->
+	<link rel="stylesheet" type="text/css" href="~/customer/css/style.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
+</head>
+<body class="theme-color-1">
+
+	<!-- loader start -->
+	@* <div class="loader_skeleton">
+		<div class="top-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="header-contact">
+							<ul>
+								<li>Welcome to Rent My Game</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-6 text-end">
+						<ul class="header-dropdown">
+							<li class="mobile-wishlist">
+								<a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+							</li>
+							<li class="onhover-dropdown mobile-account">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								My Account
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="main-menu">
+							<div class="menu-left">
+								<div class="navbar">
+									<a href="javascript:void(0)">
+										<div class="bar-style">
+											<i class="fa fa-bars sidebar-bar" aria-hidden="true"></i>
+										</div>
+									</a>
+								</div>
+								<div class="brand-logo">
+									<a href="index.html">
+										<img src="~/customer/images/icon/logo.png"
+											 class="img-fluid blur-up lazyload" alt="">
+									</a>
+								</div>
+							</div>
+							<div class="menu-right pull-right">
+								<div>
+									<nav>
+										<div class="toggle-nav"><i class="fa fa-bars sidebar-bar"></i></div>
+										<ul class="sm pixelstrap sm-horizontal">
+											<li>
+												<div class="mobile-back text-end">
+													Back<i class="fa fa-angle-right ps-2"
+														   aria-hidden="true"></i>
+												</div>
+											</li>
+											<li>
+												<a href="#">Home</a>
+											</li>
+											<li>
+												<a href="#">shop</a>
+											</li>
+											<li>
+												<a href="#">product</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+								<div>
+									<div class="icon-nav d-none d-sm-block">
+										<ul>
+											<li class="onhover-div mobile-search">
+												<div>
+													<img src="~/customer/images/icon/search.png" onclick="openSearch()"
+														 class="img-fluid blur-up lazyload" alt=""> <i class="ti-search"
+																									   onclick="openSearch()"></i>
+												</div>
+											</li>
+	
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="container section-b-space">
+			<div class="row section-t-space">
+				<div class="col-lg-6 offset-lg-3">
+					<div class="product-para">
+						<p class="first"></p>
+						<p class="second"></p>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="no-slider row">
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+						<div class="product-box">
+							<div class="img-wrapper"></div>
+							<div class="product-detail">
+								<h4></h4>
+								<h5></h5>
+								<h5 class="second"></h5>
+								<h6></h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> *@
+	<!-- loader end -->
+	<!-- header start -->
+	<header>
+		<div class="mobile-fix-option"></div>
+		<div class="top-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="header-contact">
+							<ul>
+								<li>Welcome to Rent My Game</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-6 text-end">
+						<ul class="header-dropdown">
+							<li class="mobile-wishlist">
+								<a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+							</li>
+							@* <li class="onhover-dropdown mobile-account">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								My Account
+								<ul class="onhover-show-div">
+									
+								</ul>
+							</li> *@
+							<partial name="_LoginPartial" />
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="main-menu">
+						<div class="menu-left">
+							<div class="navbar">
+								<a href="javascript:void(0)" onclick="openNav()">
+									<div class="bar-style">
+										<i class="fa fa-bars sidebar-bar" aria-hidden="true"></i>
+									</div>
+								</a>
+								<div id="mySidenav" class="sidenav">
+									<a href="javascript:void(0)" class="sidebar-overlay" onclick="closeNav()"></a>
+									<nav>
+										<div onclick="closeNav()">
+											<div class="sidebar-back text-start">
+												<i class="fa fa-angle-left pe-2"
+												   aria-hidden="true"></i> Back
+											</div>
+										</div>
+										<ul id="sub-menu" class="sm pixelstrap sm-vertical">
+											<li>
+												<a href="#">bags</a>
+												<ul>
+													<li><a href="#">shopper bags</a></li>
+													<li><a href="#">laptop bags</a></li>
+													<li><a href="#">clutches</a></li>
+													<li>
+														<a href="#">purses</a>
+														<ul>
+															<li><a href="#">purses</a></li>
+															<li><a href="#">wallets</a></li>
+															<li><a href="#">leathers</a></li>
+															<li><a href="#">satchels</a></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<div class="brand-logo">
+								<a href="index.html">
+									<img src="~/customer/images/icon/logo.png"
+										 class="img-fluid blur-up lazyload" alt="">
+								</a>
+							</div>
+						</div>
+						<div class="menu-right pull-right">
+							<div>
+								<nav id="main-nav">
+									<div class="toggle-nav"><i class="fa fa-bars sidebar-bar"></i></div>
+									<ul id="main-menu" class="sm pixelstrap sm-horizontal">
+										<li>
+											<div class="mobile-back text-end">
+												Back<i class="fa fa-angle-right ps-2"
+													   aria-hidden="true"></i>
+											</div>
+										</li>
+										<li><a asp-area="Customer" asp-controller="Games" asp-action="Index">Home</a></li>
+										<li>
+											<a href="#">shop</a>
+											<ul>
+												<li>
+													<a href="category-page(vegetables).html">
+														tab style<span class="new-tag">new</span>
+													</a>
+												</li>
+												<li><a href="category-page(top-filter).html">top filter</a></li>
+												<li><a href="category-page(modern).html">modern</a></li>
+												<li><a href="category-page.html">left sidebar</a></li>
+												<li><a href="category-page(right).html">right sidebar</a></li>
+												<li><a href="category-page(no-sidebar).html">no sidebar</a></li>
+												<li>
+													<a href="category-page(sidebar-popup).html">sidebar popup</a>
+												</li>
+												<li><a href="category-page(metro).html">metro</a></li>
+												<li><a href="category-page(full-width).html">full width</a></li>
+												<li>
+													<a href="category-page(infinite-scroll).html">
+														infinite
+														scroll
+													</a>
+												</li>
+												<li><a href=category-page(3-grid).html>three grid</a></li>
+												<li><a href="category-page(6-grid).html">six grid</a></li>
+												<li><a href="category-page(list-view).html">list view</a></li>
+											</ul>
+										</li>
+										<li>
+											<a href="#">product</a>
+											<ul>
+												<li>
+													<a href="product-page(360-view).html">
+														360 view <span class="new-tag">new</span>
+													</a>
+												</li>
+												<li>
+													<a href="product-page(video-thumbnail).html">
+														video
+														thumbnail<span class="new-tag">new</span>
+													</a>
+												</li>
+												<li>
+													<a href="#">sidebar</a>
+													<ul>
+														<li><a href="product-page.html">left sidebar</a></li>
+														<li>
+															<a href="product-page(right-sidebar).html">
+																right
+																sidebar
+															</a>
+														</li>
+														<li>
+															<a href="product-page(no-sidebar).html">no sidebar</a>
+														</li>
+													</ul>
+												</li>
+												<li>
+													<a href="#">thumbnail image</a>
+													<ul>
+														<li>
+															<a href="product-page(left-image).html">left image</a>
+														</li>
+														<li>
+															<a href="product-page(right-image).html">right image</a>
+														</li>
+														<li>
+															<a href="product-page(image-outside).html">
+																image
+																outside
+															</a>
+														</li>
+													</ul>
+												</li>
+												<li>
+													<a href="#">three column</a>
+													<ul>
+														<li>
+															<a href="product-page(3-col-left).html">
+																thumbnail
+																left
+															</a>
+														</li>
+														<li>
+															<a href="product-page(3-col-right).html">
+																thumbnail
+																right
+															</a>
+														</li>
+														<li>
+															<a href="product-page(3-column).html">
+																thubnail
+																bottom
+															</a>
+														</li>
+													</ul>
+												</li>
+												<li><a href="product-page(4-image).html">four image</a></li>
+												<li><a href="product-page(sticky).html">sticky</a></li>
+												<li><a href="product-page(accordian).html">accordian</a></li>
+												<li><a href="product-page(bundle).html">bundle</a></li>
+												<li><a href="product-page(image-swatch).html">image swatch </a></li>
+												<li><a href="product-page(vertical-tab).html">vertical tab</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+							</div>
+							<div>
+								<div class="icon-nav">
+									<ul>
+										<li class="onhover-div mobile-search">
+											<div>
+												<img src="~/customer/images/icon/search.png" onclick="openSearch()"
+													 class="img-fluid blur-up lazyload" alt=""> <i class="ti-search"
+																								   onclick="openSearch()"></i>
+											</div>
+											<div id="search-overlay" class="search-overlay">
+												<div>
+													<span class="closebtn" onclick="closeSearch()"
+														  title="Close Overlay">×</span>
+													<div class="overlay-content">
+														<div class="container">
+															<div class="row">
+																<div class="col-xl-12">
+																	<form>
+																		<div class="form-group">
+																			<input type="text" class="form-control"
+																				   id="exampleInputPassword1"
+																				   placeholder="Search a Product">
+																		</div>
+																		<button type="submit" class="btn btn-primary">
+																			<i class="fa fa-search"></i>
+																		</button>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										@* <li class="onhover-div mobile-setting">
+											<div>
+												<img src="~/customer/images/icon/setting.png"
+													 class="img-fluid blur-up lazyload" alt=""> <i class="ti-settings"></i>
+											</div>
+											<div class="show-div setting">
+												<h6>language</h6>
+												<ul>
+													<li><a href="#">english</a></li>
+													<li><a href="#">french</a></li>
+												</ul>
+												<h6>currency</h6>
+												<ul class="list-inline">
+													<li><a href="#">euro</a></li>
+													<li><a href="#">rupees</a></li>
+													<li><a href="#">pound</a></li>
+													<li><a href="#">doller</a></li>
+												</ul>
+											</div>
+										</li> *@
+									@* 	<li class="onhover-div mobile-cart">
+											<div>
+												<img src="~/customer/images/icon/cart.png"
+													 class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
+											</div>
+											<span class="cart_qty_cls">2</span>
+											<ul class="show-div shopping-cart">
+												<li>
+													<div class="media">
+														<a href="#">
+															<img alt="" class="me-3"
+																 src="~/customer/images/fashion/product/1.jpg">
+														</a>
+														<div class="media-body">
+															<a href="#">
+																<h4>item name</h4>
+															</a>
+															<h4><span>1 x $ 299.00</span></h4>
+														</div>
+													</div>
+													<div class="close-circle">
+														<a href="#">
+															<i class="fa fa-times"
+															   aria-hidden="true"></i>
+														</a>
+													</div>
+												</li>
+												<li>
+													<div class="media">
+														<a href="#">
+															<img alt="" class="me-3"
+																 src="~/customer/images/fashion/product/2.jpg">
+														</a>
+														<div class="media-body">
+															<a href="#">
+																<h4>item name</h4>
+															</a>
+															<h4><span>1 x $ 299.00</span></h4>
+														</div>
+													</div>
+													<div class="close-circle">
+														<a href="#">
+															<i class="fa fa-times"
+															   aria-hidden="true"></i>
+														</a>
+													</div>
+												</li>
+												<li>
+													<div class="total">
+														<h5>subtotal : <span>$299.00</span></h5>
+													</div>
+												</li>
+												<li>
+													<div class="buttons">
+														<a href="cart.html" class="view-cart">
+															view
+															cart
+														</a> <a href="#" class="checkout">checkout</a>
+													</div>
+												</li>
+											</ul>
+										</li> *@
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- header end -->
+	<div class="container">
+		<main role="main" class="pb-3">
+			<partial name="_Notification" />
+			@RenderBody()
+		</main>
+	</div>
+
+
+	@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+
+	<!-- latest jquery-->
+	<script src="~/customer/js/jquery-3.3.1.min.js"></script>
+
+	<!-- fly cart ui jquery-->
+	<script src="~/customer/js/jquery-ui.min.js"></script>
+
+	<!-- exitintent jquery-->
+	<script src="~/customer/js/jquery.exitintent.js"></script>
+	<script src="~/customer/js/exit.js"></script>
+
+	<!-- slick js-->
+	<script src="~/customer/js/slick.js"></script>
+
+	<!-- menu js-->
+	<script src="~/customer/js/menu.js"></script>
+
+	<!-- lazyload js-->
+	<script src="~/customer/js/lazysizes.min.js"></script>
+
+	<!-- price range js -->
+	<script src="~/customer/js/price-range.js"></script>
+
+	<!-- Bootstrap js-->
+	<script src="~/customer/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Bootstrap Notification js-->
+	<script src="~/customer/js/bootstrap-notify.min.js"></script>
+
+	<!-- Fly cart js-->
+	<script src="~/customer/js/fly-cart.js"></script>
+
+	<!-- Theme js-->
+	<script src="~/customer/js/theme-setting.js"></script>
+	<script src="~/customer/js/script.js"></script>
+
+	<script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script>
+		function openSearch() {
+			document.getElementById("search-overlay").style.display = "block";
+		}
+
+		function closeSearch() {
+			document.getElementById("search-overlay").style.display = "none";
+		}
+	</script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿@model List<Subscription>   
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>Choose the Package that’s right for you</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Packages</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!-- section start -->
+<section class="compare-section section-b-space ratio_asos">
+    <div class="container">
+        <div class="row">
+           
+                <div class="col-12">
+                    <div class="slide-4 no-arrow">
+                    @foreach (var sub in Model)
+                    {
+                    <div>
+                        <div class="compare-part">
+                            <div class="img-secton">
+                                <div>
+                                </div>
+                                <a href="#">
+                                        <h2 class="text-primary-emphasis">@sub.PackageName</h2>
+                                </a>
+                            </div>
+@*                             <div class="detail-part">
+                                <div class="title-detail">
+                                    <h6>description</h6>
+                                </div>
+                                <div class="inner-detail">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    </p>
+                                </div>
+                            </div> *@
+                            <div class="detail-part">
+                                <div class="title-detail">
+                                    <h6>Total Rent Game</h6>
+                                </div>
+                                <div class="inner-detail">
+                                    <h5>@sub.RentCount</h5>
+                                </div>
+                            </div>
+                            <div class="detail-part">
+                                <div class="title-detail">
+                                    <h6>Rent New Released Games</h6>
+                                </div>
+                                <div class="inner-detail">
+                                    <h5>@sub.NewGameCount</h5>
+                                </div>
+                            </div>
+                            <div class="detail-part">
+                                <div class="title-detail">
+                                    <h6>Replace Games</h6>
+                                </div>
+                                <div class="inner-detail">
+                                    <h5>@sub.ReplaceCount</h5>
+                                </div>
+                            </div>
+                            <div class="detail-part">
+                                <div class="title-detail">
+                                    <h6>Price</h6>
+                                </div>
+                                <div class="inner-detail">
+                                    <h5>@sub.Price</h5>
+                                </div>
+                            </div>
+                            <div class="btn-part">
+                                <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->

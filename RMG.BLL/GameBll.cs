@@ -1,7 +1,9 @@
-﻿using RMG.DAL;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RMG.DAL;
 using RMG.DAL.Repository;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
+using RMG.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace RMG.BLL
         {
             try
             {
-                List<Game> games = _uow.Game.GetAll().ToList();
+                List<Game> games = _uow.Game.GetAll(IncludeProperties:"Genre,Platform").ToList();
                 return new Result<List<Game>>
                 {
                     Status = true,
@@ -38,7 +40,7 @@ namespace RMG.BLL
         {
             try
             {
-                Game game = _uow.Game.Get(u=> u.Id==id);
+                Game game = _uow.Game.Get(u=> u.Id==id, IncludeProperties: "Genre,Platform");
                 return new Result<Game>
                 {
                     Status = true,
@@ -110,5 +112,37 @@ namespace RMG.BLL
                 return new Result<object> { Status = false, Message = ex.Message };
             }
         }
+        
+        public Result<GameVM> BindGameDropdowns()
+        {
+            try
+            {
+                GameVM game = new()
+                {
+                    PlatformList = _uow.Platform.GetAll().Select(c => new SelectListItem
+                    {
+                        Text = c.PlatformName,
+                        Value = c.Id.ToString()
+
+                    }),
+                    GenreList = _uow.Genre.GetAll().Select(c => new SelectListItem
+                    {
+                        Text = c.GenreName,
+                        Value = c.Id.ToString()
+                    }),
+                    Game = new Game()
+                };
+                return new Result<GameVM>
+                {
+                    Status = true,
+                    Data = game,
+                    StatusCode = 200,
+                };
+            }
+            catch (Exception ex) 
+            {
+                return new Result<GameVM> { Status = false, Message = ex.Message };
+            }
+        } 
     }
 }

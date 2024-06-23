@@ -1,0 +1,142 @@
+﻿@model GameVM
+
+<form method="post" enctype="multipart/form-data">
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        Add Game
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ol class="breadcrumb pull-right">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <i data-feather="home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Digital</li>
+                        <li class="breadcrumb-item active"> @(Model.Game.Id == 0 ? "Add" : "Update") Product</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row product-adding">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>General</h5>
+                </div>
+                <div class="card-body">
+                    <div class="digital-add needs-validation">
+                            <input asp-for="Game.Id" hidden />
+                            <input asp-for="Game.ImageUrl" hidden />
+                        <div class="form-group">
+                            <label asp-for="Game.Name" class="col-form-label pt-0">
+                                <span>*</span>
+                                Name
+                            </label>
+                            <input asp-for="Game.Name" class="form-control" id="validationCustom01" type="text" required="">
+                            <span asp-validation-for="Game.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label categories-basic">
+                                <span>*</span>
+                                Genre
+                            </label>
+                            <select class="custom-select form-control" asp-for="Game.GenreId" asp-items="@Model.GenreList" required="">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label categories-basic">
+                                <span>*</span>
+                                Platform
+                            </label>
+                            <select class="custom-select form-control" asp-for="Game.PlatformId" asp-items="@Model.PlatformList" required="">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Game.ReleaseDate"
+                                   class="col-form-label pt-0"><span>*</span> Release Date</label>
+                            <input asp-for="Game.ReleaseDate" class="form-control" id="validationCustomtitle" type="date"
+                                   required="">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Game.Stock" class="col-form-label">
+                                <span>*</span>
+                                Stocks
+                            </label>
+                            <input asp-for="Game.Stock" class="form-control" id="validationCustom02" type="number" required="Stock is Required">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label"><span>*</span> Availability</label>
+                            <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
+                                <label class="d-block" asp-for="Game.Available">
+                                    <input asp-for="Game.Available" class="radio_animated" id="edo-ani" type="radio"
+                                               value="true" name="Game.Available">
+                                    Yes
+                                </label>
+                                <label class="d-block" asp-for="Game.Available">
+                                        <input asp-for="Game.Available" class="radio_animated" id="edo-ani1" type="radio"
+                                               value="false" name="Game.Available">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                            <label class="col-form-label pt-0"> Image Upload</label>
+                            <input type="file" name="file" asp-for="Game.ImageUrl" class="form-control" />
+                           @*  <form class="dropzone" id="multiFileUpload" action="/upload.php">
+                                <div class="dz-message needsclick">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
+                                </div>
+                            </form> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add Description</h5>
+                </div>
+                <div class="card-body">
+                    <div class="digital-add needs-validation">
+                        <div class="form-group">
+                            <div class="description-sm">
+                                    <textarea id="editor1" name="Game.Description" asp-for="Game.Description" cols="10" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <div class="product-buttons">
+                                    <button type="submit" class="btn btn-primary">@(Model.Game.Id == 0 ? "Add" : "Update")</button>
+                                <a type="button" asp-controller="Game" asp-action="Index" class="btn btn-light">Discard</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+</form>
+
+@section Scripts{
+    @{
+        <!--dropzone js-->
+        // <script src="~/js/dropzone/dropzone.js"></script>
+        // <script src="~/js/dropzone/dropzone-script.js"></script>
+        
+    }
+}

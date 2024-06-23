@@ -17,25 +17,28 @@
 
 
     <!-- Font Awesome-->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/font-awesome.css">
 
     <!-- Flag icon-->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/flag-icon.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/flag-icon.css">
+
+    <!-- Dropzone css-->
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/dropzone.css">
 
     <!-- ico-font-->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/icofont.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/icofont.css">
 
     <!-- Prism css-->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/prism.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/prism.css">
 
     <!-- Chartist css -->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/chartist.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/chartist.css">
 
     <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="~/css/vendors/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/vendors/bootstrap.css">
 
     <!-- App css-->
-    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/admin/css/style.css">
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
@@ -48,7 +51,7 @@
                     <div class="logo-wrapper">
                         <a href="index.html">
                             <img class="blur-up lazyloaded d-block d-lg-none"
-                                 src="~/images/dashboard/multikart-logo-black.png" alt="">
+                                 src="~/admin/images/dashboard/multikart-logo-black.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -64,46 +67,9 @@
                 <div class="nav-right col">
                     <ul class="nav-menus">
                         <li>
-                            <form class="form-inline search-form">
-                                <div class="form-group">
-                                    <input class="form-control-plaintext" type="search" placeholder="Search..">
-                                    <span class="d-sm-none mobile-search">
-                                        <i data-feather="search"></i>
-                                    </span>
-                                </div>
-                            </form>
-                        </li>
-                        <li>
                             <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
                                 <i data-feather="maximize-2"></i>
                             </a>
-                        </li>
-                        <li class="onhover-dropdown">
-                            <a class="txt-dark" href="javascript:void(0)">
-                                <h6>EN</h6>
-                            </a>
-                            <ul class="language-dropdown onhover-show-div p-20">
-                                <li>
-                                    <a href="javascript:void(0)" data-lng="en">
-                                        <i class="flag-icon flag-icon-is"></i>English
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" data-lng="es">
-                                        <i class="flag-icon flag-icon-um"></i>Spanish
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" data-lng="pt">
-                                        <i class="flag-icon flag-icon-uy"></i>Portuguese
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" data-lng="fr">
-                                        <i class="flag-icon flag-icon-nz"></i>French
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="onhover-dropdown">
                             <i data-feather="bell"></i>
@@ -150,16 +116,10 @@
                                 <li class="txt-dark"><a href="javascript:void(0)">All</a> notification</li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="right_side_toggle" data-feather="message-square"></i>
-                                <span class="dot"></span>
-                            </a>
-                        </li>
                         <li class="onhover-dropdown">
                             <div class="media align-items-center">
                                 <img class="align-self-center pull-right img-50 blur-up lazyloaded"
-                                     src="~/images/dashboard/user3.jpg" alt="header-user">
+                                     src="~/admin/images/dashboard/user3.jpg" alt="header-user">
                                 <div class="dotted-animation">
                                     <span class="animate-circle"></span>
                                     <span class="main-circle"></span>
@@ -209,7 +169,7 @@
                     <div class="logo-wrapper">
                         <a href="index.html">
                             <img class="d-none d-lg-block blur-up lazyloaded"
-                                 src="~/images/dashboard/multikart-logo.png" alt="">
+                                 src="~/admin/images/dashboard/multikart-logo.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -219,7 +179,7 @@
                            aria-hidden="true"></i>
                     </a>
                     <div class="sidebar-user">
-                        <img class="img-60" src="~/images/dashboard/user3.jpg" alt="#">
+                        <img class="img-60" src="~/admin/images/dashboard/user3.jpg" alt="#">
                         <div>
                             <h6 class="f-14">JOHN</h6>
                             <p>general manager.</p>
@@ -407,28 +367,26 @@
 @*     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 
     <!-- latest jquery-->
-    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/admin/js/jquery-3.3.1.min.js"></script>
 
     <!-- Bootstrap js-->
-    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/admin/js/bootstrap.bundle.min.js"></script>
 
     <!-- feather icon js-->
-    <script src="~/js/icons/feather-icon/feather.min.js"></script>
-    <script src="~/js/icons/feather-icon/feather-icon.js"></script>
+    <script src="~/admin/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/admin/js/icons/feather-icon/feather-icon.js"></script>
 
     <!-- Sidebar jquery-->
-    <script src="~/js/sidebar-menu.js"></script>
+    <script src="~/admin/js/sidebar-menu.js"></script>
 
     <!--dropzone js-->
-    <script src="~/js/dropzone/dropzone.js"></script>
-    <script src="~/js/dropzone/dropzone-script.js"></script>
+@*     <script src="~/js/dropzone/dropzone.js"></script>
+    <script src="~/js/dropzone/dropzone-script.js"></script> *@
 
     <!--ckeditor js-->
-    <script src="~/js/editor/ckeditor/ckeditor.js"></script>
-    <script src="~/js/editor/ckeditor/ckeditor.custom.js"></script>
+    <script src="~/admin/js/editor/ckeditor/ckeditor.js"></script>
+    <script src="~/admin/js/editor/ckeditor/ckeditor.custom.js"></script>
 
-    <!-- lazyload js-->
-    <script src="assets/js/lazysizes.min.js"></script>
 
     <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -11,6 +11,9 @@ namespace RMG.DAL.Repository.IRepository
         IGenreRepository Genre { get; }
         IPlatformRepository Platform { get; }
         IGameRepository Game { get; }
+        ISubscriptionRepository Subscription { get; }
+		IApplicationUserRepository ApplicationUser { get; }
+		IRentalRepository Rental { get; }
        
         void Save();
     }

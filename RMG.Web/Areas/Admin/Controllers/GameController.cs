@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using RMG.BLL;
 using RMG.Models;
+using RMG.Models.ViewModels;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RMG.Web.Areas.Admin.Controllers
@@ -8,10 +10,12 @@ namespace RMG.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class GameController : Controller
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly GameBll _gameBll;
-        public GameController(GameBll gameBll) 
+        public GameController(GameBll gameBll, IWebHostEnvironment webHostEnvironment)
         {
-            _gameBll = gameBll;    
+            _gameBll = gameBll;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -20,37 +24,58 @@ namespace RMG.Web.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
+            GameVM game = _gameBll.BindGameDropdowns().Data;
             if (id == null || id == 0)
             {
                 //create
-                return View(new Game());
+                return View(game);
             }
             else
             {
                 //update
-                Result<Game> game = _gameBll.GetGame(id);
-                return View(game.Data);
+                game.Game = _gameBll.GetGame(id).Data;
+                return View(game);
             }
         }
         [HttpPost]  
-        public IActionResult Upsert(Game game) 
+        public IActionResult Upsert(GameVM gameVM, IFormFile? file) 
         {
             if (ModelState.IsValid)
             {
-                if (game.Id == 0)
+                if (file != null)
                 {
-                    _gameBll.AddGame(game);
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string rootPath = _webHostEnvironment.WebRootPath;
+                    string filePath = Path.Combine(rootPath, @"admin\images\games");
+
+                    using (var fileStream = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    if (!System.String.IsNullOrEmpty(gameVM.Game.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(rootPath, gameVM.Game.ImageUrl.Trim('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+                    gameVM.Game.ImageUrl = @"\admin\images\games\" + fileName;
+                }
+                if (gameVM.Game.Id == 0)
+                {
+                    _gameBll.AddGame(gameVM.Game);
                 }
                 else
                 {
-                    _gameBll.UpdateGame(game);
+                    _gameBll.UpdateGame(gameVM.Game);
                 }
                 TempData["success"] = "Game Successfully Created";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(game);
+                return View(gameVM);
             }
         }
 
