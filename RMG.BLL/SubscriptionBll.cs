@@ -2,6 +2,7 @@
 using RMG.DAL.Repository;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
+using RMG.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ namespace RMG.BLL
     public class SubscriptionBll
     {
         private readonly IUnitOfWork _uow;
-        public SubscriptionBll(IUnitOfWork uow)
+        private readonly SubscriptionHistoryBll _subsHistoryBll;
+        public SubscriptionBll(IUnitOfWork uow, SubscriptionHistoryBll subscriptionHistoryBll)
         {
             _uow = uow;
+            _subsHistoryBll = subscriptionHistoryBll;
         }
         public Result<List<Subscription>> GetAllSubscription()
         {
@@ -117,6 +120,15 @@ namespace RMG.BLL
 			{
                 ApplicationUser User= _uow.ApplicationUser.Get(u=> u.Id==UserId);
                 User.SubscriptionId = SubscriptionId;
+                SubscriptionHistory subscriptionHistory = new()
+                {
+                    ApplicationUserId = User.Id,
+                    SubscriptionId = SubscriptionId,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddMonths(1),
+                    Status = SD.ActiveStatus
+                };
+                _subsHistoryBll.AddSubscriptionHistory(subscriptionHistory);
 				_uow.ApplicationUser.Update(User);
 				_uow.Save();
 				return new Result<object>

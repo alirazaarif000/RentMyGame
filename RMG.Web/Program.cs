@@ -17,6 +17,9 @@ builder.Services.AddScoped<GenreBll>();
 builder.Services.AddScoped<PlatformBll>();
 builder.Services.AddScoped<GameBll>();
 builder.Services.AddScoped<SubscriptionBll>();
+builder.Services.AddScoped<RentalBll>();
+builder.Services.AddScoped<ApplicationUserBll>();
+builder.Services.AddScoped<SubscriptionHistoryBll>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();

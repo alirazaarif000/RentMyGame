@@ -216,14 +216,14 @@
                                                     <div class="product-box">
                                                         <div class="img-wrapper">
                                                             <div class="front">
-                                                                <a asp-action="Detail" asp-route-id="@game.Id">
+                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
                                                                     <img src="@game.ImageUrl"
                                                                     class="img-fluid blur-up lazyload"
                                                                     alt="">
                                                                 </a>
                                                             </div>
                                                             <div class="back">
-                                                                <a asp-action="Detail" asp-route-id="@game.Id">
+                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
                                                                     <img src="@game.ImageUrl"
                                                                          class="img-fluid blur-up lazyload"
                                                                          alt="">
@@ -248,7 +248,7 @@
                                                                 <div class="rating">
                                                                     <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
                                                                 </div>
-                                                                <a asp-action="Detail" asp-route-id="@game.Id">
+                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
                                                                     <h6>@game.Name</h6>
                                                                 </a>
                                                                 <h7> Release Date: @game.ReleaseDate</h7>

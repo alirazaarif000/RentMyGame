@@ -1,4 +1,4 @@
-﻿@model Game
+﻿@model RentGameVM
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
     <div class="container">
@@ -28,7 +28,7 @@
                 <div class="col-lg-6">
                     <div class="product-slick">
                         <div>
-                            <img src="@Model.ImageUrl" alt=""
+                            <img src="@Model.Game.ImageUrl" alt=""
                                  class="img-fluid blur-up lazyload image_zoom_cls-0">
                         </div>
                         @* <div>
@@ -74,9 +74,9 @@
                 <div class="col-lg-6 rtl-text">
                     <div class="product-right">
                         <div class="label-section">
-                            <span class="badge badge-grey-color">@Model.Platform.PlatformName</span>
+                            <span class="badge badge-grey-color">@Model.Game.Platform.PlatformName</span>
                         </div>
-                        <h2>@Model.Name</h2>
+                        <h2>@Model.Game.Name</h2>
                         <div class="rating-section">
                             <div class="rating">
                                 <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
@@ -84,8 +84,8 @@
                             <h6>120 ratings</h6>
                         </div>
                         <div class="label-section">
-                            <span class="badge badge-grey-color">@(Model.Available ? "Active" : "InActive")</span>
-                            <span class="label-text">in @Model.Genre.GenreName</span>
+                            <span class="badge badge-grey-color">@(Model.Game.Available ? "Active" : "InActive")</span>
+                            <span class="label-text">in @Model.Game.Genre.GenreName</span>
                         </div>
                        @*  <h3 class="price-detail">$32.96 <del>$459.00</del><span>55% off</span></h3> *@
                        @*  <ul class="color-variant">
@@ -136,16 +136,34 @@
                             <h6 class="product-title"> Remaining Stock</h6>
                             <div class="qty-box">
                                 <div class="input-group">
-                                    <input disabled type="text" name="quantity" class="form-control input-number" value="@Model.Stock">
+                                    <input disabled type="text" name="quantity" class="form-control input-number" value="@Model.Game.Stock">
                                 </div>
                             </div>
                         </div>
                         <div class="product-buttons">
-                            <a href="javascript:void(0)" id="cartEffect"
-                               class="btn btn-solid hover-solid btn-animation">
-                                <i class="fa fa-shopping-cart me-1"
-                                   aria-hidden="true"></i> Rent Now
-                            </a> <a href="#" class="btn btn-solid">
+                            @* @if (Model.Rental.GameId == @Model.Game.Id)
+                            {
+                                <button asp-controller="Games" asp-action="RentGame" asp-route-id="@Model.Game.Id" id="cartEffect"
+                                class="btn btn-solid hover-solid btn-animation" disabled>
+                                     Play Now
+                                </button>
+                            } *@
+                            @if (Model.Rental.GameId == @Model.Game.Id)
+                            {
+                                <a asp-controller="Games" asp-action="RemoveRent" asp-route-id="@Model.Rental.Id" asp-route-gameId="@Model.Game.Id" id="cartEffect"
+                                        class="btn btn-solid hover-solid btn-animation">
+                                    Return Game
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Games" asp-action="RentGame" asp-route-gameId="@Model.Game.Id" id="cartEffect"
+                                        class="btn btn-solid hover-solid btn-animation">
+                                    <i class="fa fa-shopping-cart me-1"
+                                       aria-hidden="true"></i> Rent Now
+                                </a>
+                            }
+                            <a href="#" class="btn btn-solid">
                                 <i class="fa fa-bookmark fz-16 me-2" aria-hidden="true"></i>wishlist
                             </a>
                         </div>
@@ -225,7 +243,7 @@
                         <div class="product-tab-discription">
                             <div class="part">
                                 <p>
-                                   @Html.Raw(@Model.Description)
+                                    @Html.Raw(@Model.Game.Description)
                                 </p>
                             </div>
                             @* <div class="part">

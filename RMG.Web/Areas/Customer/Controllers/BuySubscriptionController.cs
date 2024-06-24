@@ -25,6 +25,7 @@ namespace RMG.Web.Areas.Customer.Controllers
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             Result<object> result = _subscriptionBll.BuySubscription(id, userId);
+
             if (result.Status == true) {
             TempData["success"] = "Subscription Bought Successfully";
             return RedirectToAction("Index","Games");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RMG.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace RMG.DAL.Repository.IRepository
         ISubscriptionRepository Subscription { get; }
 		IApplicationUserRepository ApplicationUser { get; }
 		IRentalRepository Rental { get; }
+		ISubscriptionHistoryRepository SubscriptionHistory { get; }
        
         void Save();
     }

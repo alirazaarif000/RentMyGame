@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RMG.DataAccess\RMG.DAL.csproj" />
     <ProjectReference Include="..\RMG.Models\RMG.Models.csproj" />
+    <ProjectReference Include="..\RMG.Utility\RMG.Utility.csproj" />
   </ItemGroup>
 
 </Project>

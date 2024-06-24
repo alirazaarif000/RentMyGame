@@ -16,6 +16,7 @@ namespace RMG.DAL.Repository
         public ISubscriptionRepository Subscription { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IRentalRepository Rental { get; private set; }
+        public ISubscriptionHistoryRepository SubscriptionHistory { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -25,6 +26,7 @@ namespace RMG.DAL.Repository
             Subscription = new SubscriptionRepository(_context);
 			ApplicationUser = new ApplicationUserRepository(_context);
 			Rental = new RentalRepository(_context);
+			SubscriptionHistory = new SubscriptionHistoryRepository(_context);
         }
         public void Save()
         {
