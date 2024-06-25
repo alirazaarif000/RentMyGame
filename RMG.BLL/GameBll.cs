@@ -18,11 +18,13 @@ namespace RMG.BLL
         private readonly IUnitOfWork _uow;
         private readonly ApplicationUserBll _userBll;
         private readonly RentalBll _rentalBll;
-        public GameBll(IUnitOfWork uow, ApplicationUserBll userBll, RentalBll rentalBll)
+        private readonly ReviewBll _reviewBll;
+        public GameBll(IUnitOfWork uow, ApplicationUserBll userBll, RentalBll rentalBll, ReviewBll reviewBll)
         {
             _uow = uow;
             _userBll = userBll;
             _rentalBll = rentalBll;
+            _reviewBll = reviewBll;
         }
         public Result<List<Game>> GetAllGame()
         {
@@ -46,6 +48,22 @@ namespace RMG.BLL
             try
             {
                 Game game = _uow.Game.Get(u=> u.Id==id, IncludeProperties: "Genre,Platform");
+                Result<List<Review>> result = _reviewBll.GetAllReview(id);
+                if (result.Status && result.Data!=null)
+                {
+                    List<Review> reviews = result.Data;
+                    if (reviews.Count > 0)
+                    {
+                        game.RatingCount = reviews.Count;
+                        int averageRating = (int)Math.Round(reviews.Average(r => r.Rating));
+                        game.Ratings=averageRating;
+                    }
+                }
+                else
+                {
+                    game.RatingCount=0;
+                    game.Ratings = 0;
+                }
                 return new Result<Game>
                 {
                     Status = true,

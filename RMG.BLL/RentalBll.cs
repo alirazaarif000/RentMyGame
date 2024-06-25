@@ -18,11 +18,14 @@ namespace RMG.BLL
         {
             _uow = uow;
         }
-        public Result<List<Rental>> GetAllRental(string id)
+        public Result<List<Rental>> GetAllRental(string id, string? status=null)
         {
             try
             {
-                List<Rental> rentals = _uow.Rental.GetAll(u=>u.ApplicationUserId==id, IncludeProperties:"" ).ToList();
+                List<Rental> rentals = _uow.Rental.GetAll(u=>u.ApplicationUserId==id, IncludeProperties:"Game" ).ToList();
+                if (status != null) {
+                rentals= rentals.Where(r=>r.Status == status).ToList();
+                }
                 return new Result<List<Rental>>
                 {
                     Status = true,
@@ -32,7 +35,7 @@ namespace RMG.BLL
             }
             catch (Exception ex) 
             { 
-                return new Result<List<Rental>> { Status=false, Message = ex.Message };            
+                return new Result<List<Rental>> { Status=false, Data=null, Message = ex.Message };            
             }
         }
         public Result<Rental> GetRental(int? id)

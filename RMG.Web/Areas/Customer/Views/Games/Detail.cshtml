@@ -78,10 +78,18 @@
                         </div>
                         <h2>@Model.Game.Name</h2>
                         <div class="rating-section">
-                            <div class="rating">
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                            </div>
-                            <h6>120 ratings</h6>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= @Model.Game.Ratings)
+                                {
+                                    <i class="fa fa-star" style="color:gold"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-star" style="color:black"></i>
+                                }
+                            }
+                            <h6>@Model.Game.RatingCount ratings</h6>
                         </div>
                         <div class="label-section">
                             <span class="badge badge-grey-color">@(Model.Game.Available ? "Active" : "InActive")</span>
@@ -274,35 +282,32 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="top-review" role="tabpanel" aria-labelledby="review-top-tab">
-                        <form class="theme-form">
+                        <form class="theme-form" method="post">
+                            <input asp-for="@Model.Game.Id" hidden />
                             <div class="form-row row">
                                 <div class="col-md-12">
-                                    <div class="media">
-                                        <label>Rating</label>
-                                        <div class="media-body ms-3">
-                                            <div class="rating three-star">
-                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                            </div>
+                                    <label>Rating</label>
+                                    <div class="media-body ms-3">
+                                        <div class="rating">
+                                            <i class="fa fa-star" data-rating="1"></i>
+                                            <i class="fa fa-star" data-rating="2"></i>
+                                            <i class="fa fa-star" data-rating="3"></i>
+                                            <i class="fa fa-star" data-rating="4"></i>
+                                            <i class="fa fa-star" data-rating="5"></i>
+                                            <input asp-for="@Model.Review.Rating" type="hidden" id="rating"> <!-- Hidden input for rating -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter Your name"
-                                           required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" placeholder="Email" required>
-                                </div>
+
+
                                 <div class="col-md-12">
-                                    <label for="review">Review Title</label>
-                                    <input type="text" class="form-control" id="review"
+                                    <label asp-for="@Model.Review.Subject">Review Subject</label>
+                                    <input asp-for="@Model.Review.Subject" type="text" class="form-control" id="review"
                                            placeholder="Enter your Review Subjects" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="review">Review Title</label>
-                                    <textarea class="form-control" placeholder="Wrire Your Testimonial Here"
+                                    <label asp-for="@Model.Review.Comment">Comments</label>
+                                    <textarea asp-for ="@Model.Review.Comment" class="form-control" placeholder="Wrire Your Testimonial Here"
                                               id="exampleFormControlTextarea1" rows="6"></textarea>
                                 </div>
                                 <div class="col-md-12">
@@ -320,3 +325,39 @@
     </div>
 </section>
 <!-- product-tab ends -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".rating i");
+        const defaultRating = 5; // Set default rating here
+
+        stars.forEach((star, index) => {
+            star.style.cursor = "pointer"; // Set cursor to pointer for all stars
+
+            // Set initial default selected stars
+            if (index < defaultRating) {
+                star.classList.add("selected");
+                star.style.color = "#ffa200"; // Optional: Visual feedback for default selected stars
+            }
+
+            star.addEventListener("click", function () {
+                const ratingValue = parseInt(this.getAttribute("data-rating"));
+                document.getElementById("rating").value = ratingValue;
+
+                // Update selected stars visual feedback
+                stars.forEach((s, idx) => {
+                    if (idx <= index) {
+                        s.classList.add("selected");
+                        s.style.color = "#ffa200"; // Optional: Visual feedback for selected stars
+                    } else {
+                        s.classList.remove("selected");
+                        s.style.color = "black"; // Reset color for non-selected stars
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+

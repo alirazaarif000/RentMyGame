@@ -10,5 +10,6 @@ namespace RMG.Models.ViewModels
     {
         public Game Game { get; set; }
         public Rental Rental { get; set; }
+        public Review Review { get; set; }
     }
 }

@@ -24,5 +24,6 @@ namespace RMG.DAL
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<SubscriptionHistory> SubscriptionsHistory { get; set; }
+        public DbSet<Review> Reviews  { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using RMG.DAL;
 namespace RMG.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240624104414_addcolumntoRentals")]
-    partial class addcolumntoRentals
+    [Migration("20240625070917_addReviewTable")]
+    partial class addReviewTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -335,8 +335,46 @@ namespace RMG.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubscriptionHistoryId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Rentals");
+                });
+
+            modelBuilder.Entity("RMG.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("ReviewDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -344,9 +382,7 @@ namespace RMG.DAL.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.HasIndex("SubscriptionHistoryId");
-
-                    b.ToTable("Rentals");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("RMG.Models.Subscription", b =>
@@ -508,17 +544,28 @@ namespace RMG.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RMG.Models.SubscriptionHistory", "SubscriptionHistory")
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("RMG.Models.Review", b =>
+                {
+                    b.HasOne("RMG.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("SubscriptionHistoryId")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RMG.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Game");
-
-                    b.Navigation("SubscriptionHistory");
                 });
 
             modelBuilder.Entity("RMG.Models.SubscriptionHistory", b =>

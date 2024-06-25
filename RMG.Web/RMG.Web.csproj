@@ -22,4 +22,11 @@
     <ProjectReference Include="..\RMG.Utility\RMG.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\jsfiles\gamecustomer.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

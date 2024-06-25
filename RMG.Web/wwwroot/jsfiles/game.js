@@ -12,7 +12,7 @@ function loadDataTable() {
             {
                 data: 'imageUrl', // Column for image URL
                 render: function (data, type, full, meta) {
-                    return '<img src="' + data + '" data-field="image">';
+                    return '<img src="' + data + '" data-field="image" style="width: 100px; height: 100px;">';
                 },
                 width:"20%"
             },

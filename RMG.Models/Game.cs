@@ -34,5 +34,10 @@ namespace RMG.Models
         [ValidateNever]
         [ForeignKey(nameof(PlatformId))]
         public Platform Platform { get; set; }
+
+        [NotMapped]
+        public int Ratings { get; set; }
+        [NotMapped]
+        public int RatingCount { get; set; }
     }
 }
