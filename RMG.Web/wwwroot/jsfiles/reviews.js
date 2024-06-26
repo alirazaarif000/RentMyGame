@@ -1,31 +1,47 @@
-﻿var dataTable;
-$(document).ready(function () {
+﻿$(document).ready(function () {
     loadDataTable();
-})
-function loadDataTable() {
-    debugger;
-    dataTable = $('#tblData').DataTable({
-        ajax: {
-            "url": '/admin/review/getall',
-            "type": 'GET'
-        },
-        columns: [
-            { data: "applicationUser.userName", "width": "20%" },
-            { data: "game.name", "width": "15%" },
+});
 
-            { data: "subject", "width": "5%" },
-            { data: "comment", "width": "15%" },
-            {
-                data: "id",
-                "render": function (data) {
-                    return `<div class="w-75 " role="group">
-                        <a href="/admin/game/upsert?id=${data}"> <i class="fa fa-edit" title="Edit" ></i></a>
-                        <a OnClick=Delete("/admin/game/delete/${data}") > <i class="fa fa-trash" title="Delete" ></i></a>
+function loadDataTable() {
+    $.ajax({
+        url: '/admin/review/getall',
+        type: 'GET',
+        success: function (data) {
+            console.log("JSON Response:", data); // Log the JSON response to the console
+
+            $('#tblData').DataTable({
+                data: data, // Directly use the data array from the response
+                columns: [
+                    { "title": "User Email", "data": "applicationUser.userName", "defaultContent": "" },
+                    { "title": "Game Name", "data": "game.name", "defaultContent": "" },
+                    {
+                        "title": "Rating",
+                        "data": 'rating', // Column for image URL
+                        render: function (data, type, full, meta) {
+                            return getStarRatingHtml(data);
+                        },
+                        width: "20%"
+                    },
+                    { "title": "Subject", "data": "subject", "defaultContent": "" },
+                    { "title": "Comments", "data": "comment", "defaultContent": "" },
+                    {
+                        "title":"Action",
+                        "data": "id",
+                        "render": function (data) {
+                            return `<div class="w-75 " role="group">
+                        <a href="/admin/review/upsert?id=${data}"> Approve</a>
+                        <a OnClick=Delete("/admin/game/delete/${data}") > Reject</a>
                     </div>`
-                },
-                "width": "10%"
-            },
-        ]
+                        },
+                        "width": "10%"
+                    },
+                    // Add more columns as needed
+                ]
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching data:", textStatus, errorThrown);
+        }
     });
 }
 function getStarRatingHtml(rating) {
@@ -38,26 +54,4 @@ function getStarRatingHtml(rating) {
         }
     }
     return starHtml;
-}
-function Delete(url) {
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                success: function (data) {
-                    dataTable.ajax.reload();
-                    toastr.success(data.message);
-                }
-            })
-        }
-    });
 }

@@ -132,5 +132,25 @@ namespace RMG.BLL
                 return new Result<List<Review>> { Status = false, Message = ex.Message };
             }
         }
-    }
+		public Result<object> ApproveReview(int id)
+		{
+			try
+			{
+                Review review= _uow.Review.Get(r => r.Id == id);
+                review.IsApproved = true;
+				_uow.Review.Update(review);
+				_uow.Save();
+				return new Result<object>
+				{
+					Status = true,
+					Data = null,
+					StatusCode = 200
+				};
+			}
+			catch (Exception ex)
+			{
+				return new Result<object> { Status = true, Data = null, StatusCode = 200 };
+			}
+		}
+	}
 }

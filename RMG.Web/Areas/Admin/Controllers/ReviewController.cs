@@ -18,11 +18,11 @@ namespace RMG.Web.Areas.Admin.Controllers
         }
 
         //Api's
-        [HttpGet]
         public IActionResult getall()
         {
-            List<Review> reviews = _reviewBll.ReviewsForApproval().Data;
+            var reviews = _reviewBll.ReviewsForApproval().Data;
             return Json(reviews);
         }
+ 
     }
 }

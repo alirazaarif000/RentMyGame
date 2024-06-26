@@ -18,6 +18,7 @@ namespace RMG.Models
 		public string Comment { get; set; }
 		public DateOnly ReviewDate { get; set; }
 		public bool IsApproved { get; set; }
+		public string Status { get; set; }
 
 		[ForeignKey(nameof(ApplicationUserId))]
 		[ValidateNever]
