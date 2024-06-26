@@ -21,7 +21,11 @@ namespace RMG.BLL
         {
             try
             {
-                List<Review> reviews = _uow.Review.GetAll(u=>u.GameId==GameId).ToList();
+                List<Review> reviews = _uow.Review.GetAll().ToList();
+                if (GameId != null)
+                {
+                    reviews= reviews.Where(u=>u.GameId == GameId).ToList();
+                }
                 return new Result<List<Review>>
                 {
                     Status = true,
@@ -109,6 +113,23 @@ namespace RMG.BLL
             catch(Exception ex) 
             {
                 return new Result<object> { Status = false, Message = ex.Message };
+            }
+        }
+        public Result<List<Review>> ReviewsForApproval()
+        {
+            try
+            {
+                List<Review> reviews = _uow.Review.GetAll(r=>r.IsApproved==false, IncludeProperties: "ApplicationUser,Game").ToList();
+                return new Result<List<Review>>
+                {
+                    Status = true,
+                    Data = reviews,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<Review>> { Status = false, Message = ex.Message };
             }
         }
     }

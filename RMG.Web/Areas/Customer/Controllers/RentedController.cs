@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RMG.BLL;
 using RMG.Models;
 using RMG.Utility;
@@ -19,8 +20,8 @@ namespace RMG.Web.Areas.Customer.Controllers
 			return View();
 		}
 
-		//Api's
-
+        //Api's
+        [Authorize]
 		public IActionResult getall()
 		{
             var claimsIdentity = (ClaimsIdentity)User.Identity;

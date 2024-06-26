@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -310,17 +313,21 @@
 													   aria-hidden="true"></i>
 											</div>
 										</li>
-										<li><a asp-area="Customer" asp-controller="Games" asp-action="Index">Home</a></li>
-										<li>
-											<a href="#">My Games</a>
-											<ul>
-												<li>
-													<a asp-area="Customer" asp-controller="Rented" asp-action="Index">
-														Rented
-													</a>
-												</li>
-											</ul>
-										</li>
+										
+											<li><a asp-area="Customer" asp-controller="Games" asp-action="Index">Home</a></li>
+										@if (SignInManager.IsSignedIn(User))
+										{
+											<li>
+												<a href="#">My Games</a>
+												<ul>
+													<li>
+														<a asp-area="Customer" asp-controller="Rented" asp-action="Index">
+															Rented
+														</a>
+													</li>
+												</ul>
+											</li>
+										}
 										<li>
 											<a href="#">Subscriptions</a>
 											<ul>

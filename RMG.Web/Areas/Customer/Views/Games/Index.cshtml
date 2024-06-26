@@ -64,12 +64,15 @@
                             <h3 class="collapse-block-title">Release Date</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="collection-brand-filter" id="release-filter">
-                                    <input type="Date" class="form-control" name="name" value="" />
+                                    <label class="col-form-label mt-3" for="">From</label>
+                                    <input type="Date" class="form-control" name="FromDate" id="FromDate" />
+                                </div>
+                                <div class="collection-brand-filter" id="release-filter">
+                                    <label class="col-form-label" for="">To</label>
+                                    <input type="Date" class="form-control" name="ToDate" id="ToDate" />
                                 </div>
                             </div>
                         </div>
-                       
-
                     </div>
                     <!-- silde-bar colleps block end here -->
                   
@@ -78,25 +81,6 @@
                     <div class="page-main-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                @* <div class="top-banner-wrapper">
-                                    <a href="#">
-                                        <img src="~/customer/images/mega-menu/2.jpg"
-                                             class="img-fluid blur-up lazyload" alt="">
-                                    </a>
-                                    <div class="top-banner-content small-section">
-                                        <h4>BIGGEST DEALS ON TOP BRANDS</h4>
-                                        <p>
-                                            The trick to choosing the best wear for yourself is to keep in mind your
-                                            body type, individual style, occasion and also the time of day or
-                                            weather.
-                                            In addition to eye-catching products from top brands, we also offer an
-                                            easy 30-day return and exchange policy, free and fast shipping across
-                                            all pin codes, cash or card on delivery option, deals and discounts,
-                                            among other perks. So, sign up now and shop for westarn wear to your
-                                            heart’s content on Multikart.
-                                        </p>
-                                    </div>
-                                </div> *@
                                 <div class="collection-product-wrapper">
                                     <div class="product-top-filter">
                                         <div class="row">
@@ -166,59 +150,7 @@
                                         </div>
                                     </div>
                                     <div class="product-wrapper-grid">
-                                        <div class="row margin-res">
-                                            @foreach (var game in Model) {
-                                                <div class="col-xl-3 col-6 col-grid-box">
-                                                    <div class="product-box">
-                                                        <div class="img-wrapper">
-                                                            <div class="front">
-                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
-                                                                    <img src="@game.ImageUrl"
-                                                                    class="img-fluid blur-up lazyload"
-                                                                    alt="">
-                                                                </a>
-                                                            </div>
-                                                            <div class="back">
-                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
-                                                                    <img src="@game.ImageUrl"
-                                                                         class="img-fluid blur-up lazyload"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>
-                                                           @*  <div class="cart-info cart-wrap">
-                                                                <button data-bs-toggle="modal"
-                                                                        data-bs-target="#addtocart" title="Add to cart">
-                                                                    <i class="ti-shopping-cart"></i>
-                                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                                </a> <a href="#" data-bs-toggle="modal"
-                                                                        data-bs-target="#quick-view" title="Quick View">
-                                                                    <i class="ti-search" aria-hidden="true"></i>
-                                                                </a> <a href="compare.html" title="Compare">
-                                                                    <i class="ti-reload" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div> *@
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <div>
-                                                                <div class="rating">
-                                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                                                </div>
-                                                                <a asp-action="Detail" asp-route-gameId="@game.Id">
-                                                                    <h6>@game.Name</h6>
-                                                                </a>
-                                                                <h7> Release Date: @game.ReleaseDate</h7>
-                                                                <h5>(@game.Stock Games)</h5>
-                                                               @*  <ul class="color-variant">
-                                                                    <li class="bg-light0"></li>
-                                                                    <li class="bg-light1"></li>
-                                                                    <li class="bg-light2"></li>
-                                                                </ul> *@
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
+                                        <div class="row margin-res" id="game-list">
                                         </div>
                                     </div>
                                     <div class="product-pagination">

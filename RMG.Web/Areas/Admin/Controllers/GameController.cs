@@ -65,12 +65,14 @@ namespace RMG.Web.Areas.Admin.Controllers
                 if (gameVM.Game.Id == 0)
                 {
                     _gameBll.AddGame(gameVM.Game);
+                    TempData["success"] = "Game Successfully Created";
                 }
                 else
                 {
                     _gameBll.UpdateGame(gameVM.Game);
+                    TempData["success"] = "Game Successfully Updated";
                 }
-                TempData["success"] = "Game Successfully Created";
+                
                 return RedirectToAction("Index");
             }
             else

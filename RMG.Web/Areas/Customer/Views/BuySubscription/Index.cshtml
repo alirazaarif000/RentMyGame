@@ -1,4 +1,4 @@
-﻿@model List<Subscription>   
+﻿@model SubscriptionVM 
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
     <div class="container">
@@ -27,7 +27,7 @@
            
                 <div class="col-12">
                     <div class="slide-4 no-arrow">
-                    @foreach (var sub in Model)
+                    @foreach (var sub in Model.Subscription)
                     {
                     <div>
                         <div class="compare-part">
@@ -80,10 +80,22 @@
                                     <h5>@sub.Price</h5>
                                 </div>
                             </div>
-                            <div class="btn-part">
-                                <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Buy Now</a>
+                                <div class="btn-part">
+                                @if (sub.Id == Model.SubscribedId)
+                                {
+                                    <button asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" disabled class="btn btn-success">Purchased</button>
+                                    
+                                }
+                                else if (Model.SubscribedId == null)
+                                {
+                                    <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Buy Now</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Upgrade Now</a>
+                                }
+                                </div>
                             </div>
-                        </div>
                     </div>
                     }
                 </div>

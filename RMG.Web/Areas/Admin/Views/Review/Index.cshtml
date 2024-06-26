@@ -1,0 +1,97 @@
+﻿<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        Product Review
+                        <small>Multikart Admin panel</small>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ol class="breadcrumb pull-right">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <i data-feather="home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Digital</li>
+                    <li class="breadcrumb-item active">Product Review</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <form class="form-inline search-form search-box">
+                        <div class="form-group">
+                            <input class="form-control-plaintext" type="search" placeholder="Search..">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="table-responsive table-desi">
+                            <table class="review-table table all-package" id="tblData">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <th>Game Name</th>
+                                        <th>Rating</th>
+                                        <th>Subject</th>
+                                        <th>Comment</th>
+                                        <th>Published</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @* <tr>
+                                    <td>01</td>
+                                    <td>Maureen Biologist</td>
+                                    <td>Outwear & Coats</td>
+                                    <td>
+                                    <ul class="rating">
+                                    <li>
+                                    <i class="fa fa-star theme-color"></i>
+                                    </li>
+                                    <li>
+                                    <i class="fa fa-star theme-color"></i>
+                                    </li>
+                                    <li>
+                                    <i class="fa fa-star"></i>
+                                    </li>
+                                    <li>
+                                    <i class="fa fa-star"></i>
+                                    </li>
+                                    <li>
+                                    <i class="fa fa-star"></i>
+                                    </li>
+                                    </ul>
+                                    </td>
+                                    <td>The Product is No Longer Needed</td>
+                                    <td class="td-check">
+                                    <i data-feather="check-circle"></i>
+                                    </td>
+                                    </tr> *@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+@section Scripts {
+    @{
+        <script src="~/jsfiles/reviews.js"></script>
+    }
+}

@@ -31,7 +31,33 @@ namespace RMG.BLL
             try
             {
                 List<Game> games = _uow.Game.GetAll(IncludeProperties:"Genre,Platform").ToList();
-                return new Result<List<Game>>
+                foreach (var game in games)
+                {
+                    Result<List<Review>> result = _reviewBll.GetAllReview(game.Id);
+
+                    if (result.Status && result.Data != null)
+                    {
+                        List<Review> reviews = result.Data;
+
+                        if (reviews.Count > 0)
+                        {
+                            game.RatingCount = reviews.Count;
+                            int averageRating = (int)Math.Round(reviews.Average(r => r.Rating));
+                            game.Ratings = averageRating;
+                        }
+                        else
+                        {
+                            game.RatingCount = 0;
+                            game.Ratings = 0;
+                        }
+                    }
+                    else
+                    {
+                        game.RatingCount = 0;
+                        game.Ratings = 0;
+                    }
+                }
+                    return new Result<List<Game>>
                 {
                     Status = true,
                     Data = games,
@@ -191,7 +217,6 @@ namespace RMG.BLL
                 }
                 List<Rental> rentGames = rentGamesResult.Data ?? new List<Rental>();
                 List<Rental> activeRentGames = rentGames.Where(r => r.Status == SD.ActiveStatus).ToList();
-				List<Rental> returnedRentGames = rentGames.Where(r => r.Status == SD.ReturnedStatus).ToList();
 				Subscription subscription = user.Subscription;
                 if (subscription == null)
                 {
@@ -204,6 +229,10 @@ namespace RMG.BLL
                     return new Result<object> { Status = false, Message = "Game not found." };
                 }
                 Game game = gameResult.Data;
+                if (game.Stock == 0)
+                {
+                    return new Result<object> { Status = false, Message = "Game out of Stock." };
+                }
 
                 DateOnly past3M = DateOnly.FromDateTime(DateTime.Now.AddMonths(-3));
 
