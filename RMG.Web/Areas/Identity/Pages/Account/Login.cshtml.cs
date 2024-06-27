@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using RMG.DAL.Repository;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models.ViewModels;
+using RMG.Utility;
 
 namespace RMG.Web.Areas.Identity.Pages.Account
 {
@@ -91,7 +92,7 @@ namespace RMG.Web.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _userRegistrationService.LoginUserAsync(Input);
+                var result = await _userRegistrationService.LoginUserAsync(Input, SD.Role_Customer);
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);

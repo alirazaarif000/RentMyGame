@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using RMG.BLL;
 using RMG.Models;
 using RMG.Models.ViewModels;
+using RMG.Utility;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class GameController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

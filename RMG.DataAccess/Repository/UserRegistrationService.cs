@@ -90,9 +90,27 @@ namespace RMG.DAL.Repository
             }
         }
 
-        public async Task<SignInResult> LoginUserAsync(LoginVM loginVM)
+        public async Task<SignInResult> LoginUserAsync(LoginVM loginVM, string Role)
         {
             var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, loginVM.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                if (Role == SD.Role_Admin)
+                {
+                    var user = await _userManager.FindByEmailAsync(loginVM.Email);
+                    if (user != null)
+                    {
+                        var isAdmin = await _userManager.IsInRoleAsync(user, SD.Role_Admin);
+                        if (!isAdmin)
+                        {
+                            await _signInManager.SignOutAsync();
+                            return SignInResult.Failed;
+                        }
+                    }
+                }
+            }
+
             return result;
         }
     }

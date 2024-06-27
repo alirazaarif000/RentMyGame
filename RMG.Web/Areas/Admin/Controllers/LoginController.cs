@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models.ViewModels;
+using RMG.Utility;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
@@ -23,20 +25,15 @@ namespace RMG.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _registrationService.LoginUserAsync(model);
+                var result = await _registrationService.LoginUserAsync(model, SD.Role_Admin);
 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Genre");
                 }
-
-                if (result.IsLockedOut)
-                {
-                    return View("Lockout");
-                }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Only administrators can log in.");
                 }
             }
 

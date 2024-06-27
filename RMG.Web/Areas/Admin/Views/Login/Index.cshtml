@@ -60,13 +60,16 @@
                                     <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
                                          aria-labelledby="top-profile-tab">
                                         <form method="post" class="form-horizontal auth-form">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                                             <div class="form-group">
-                                                <input asp-for="Email" required="" name="login[username]" type="email"
+                                                <input asp-for="Email" required="" type="email"
                                                        class="form-control" placeholder="Username" id="exampleInputEmail1">
+                                                <span asp-validation-for="Email" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <input asp-for="Password" required="" name="login[password]" type="password"
+                                                <input asp-for="Password" required="" type="password"
                                                        class="form-control" placeholder="Password">
+                                                <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
                                             <div class="form-terms">
                                                 <div class="form-check mesm-2">

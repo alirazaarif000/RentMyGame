@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RMG.BLL;
 using RMG.DAL;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
 using RMG.Models.ViewModels;
+using RMG.Utility;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class UsersController : Controller
     {
         private readonly ApplicationUserBll _applicationUserBll;

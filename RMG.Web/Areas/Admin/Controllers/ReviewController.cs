@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RMG.BLL;
 using RMG.Models;
+using RMG.Utility;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ReviewController : Controller
     {
         private readonly ReviewBll _reviewBll;

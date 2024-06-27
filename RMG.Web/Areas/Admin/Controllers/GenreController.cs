@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RMG.BLL;
 using RMG.Models;
+using RMG.Utility;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class GenreController : Controller
     {
         private readonly GenreBll _genreBll;

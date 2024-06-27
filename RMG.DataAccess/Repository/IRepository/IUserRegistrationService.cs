@@ -12,6 +12,6 @@ namespace RMG.DAL.Repository.IRepository
     public interface IUserRegistrationService
     {
         Task<IdentityResult> RegisterUserAsync(RegisterVM model,ClaimsPrincipal user);
-        Task<SignInResult> LoginUserAsync(LoginVM model);
+        Task<SignInResult> LoginUserAsync(LoginVM model, string Role);
     }
 }
