@@ -16,6 +16,8 @@ namespace RMG.Models
 		[ForeignKey(nameof(SubscriptionId))]
 		[ValidateNever]
 		public Subscription Subscription { get; set; }
+		[NotMapped]
+		public string Role {  get; set; }
 
 	}
 }

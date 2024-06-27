@@ -29,8 +29,8 @@ function loadDataTable() {
                         "data": "id",
                         "render": function (data) {
                             return `<div class="w-75 " role="group">
-                        <a href="/admin/review/upsert?id=${data}"> Approve</a>
-                        <a OnClick=Delete("/admin/game/delete/${data}") > Reject</a>
+                        <a href="/admin/review/ApproveReview?id=${data}" class="mx-2"> <i class="fa fa-check" style="color:green"></i></a>
+                        <a href="/admin/review/RejectReview?id=${data}" ><i class="fa fa-times" style="color:red"></i></a>
                     </div>`
                         },
                         "width": "10%"

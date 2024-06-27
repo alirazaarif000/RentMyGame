@@ -97,6 +97,7 @@ namespace RMG.Web.Areas.Customer.Controllers
             }
             rentGameVM.Review.ApplicationUserId = userId;
             rentGameVM.Review.IsApproved = false;
+            rentGameVM.Review.Status = SD.ApprovalPendingReview;
             rentGameVM.Review.GameId = rentGameVM.Game.Id;
             rentGameVM.Review.ReviewDate= DateOnly.FromDateTime(DateTime.Now);
             Result<object> result = _reviewBll.AddReview(rentGameVM.Review);

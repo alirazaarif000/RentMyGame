@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-	ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -64,61 +64,61 @@
 
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="page-title">
-					<h2>create account</h2>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<nav aria-label="breadcrumb" class="theme-breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-						<li class="breadcrumb-item active" aria-current="page">create account</li>
-					</ol>
-				</nav>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>create account</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">create account</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- breadcrumb End -->
 <!--section start-->
 <section class="register-page section-b-space">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<h3>create account</h3>
-				<div class="theme-card">
-					<form class="theme-form" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-						<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-						<div class="form-row row">
-							<div class="col-md-6">
-								<label asp-for="Input.Email">email</label>
-								<input type="email" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" required="">
-							</div>
-							<div class="col-md-6">
-								<label asp-for="Input.Password">Password</label>
-								<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" type="password" id="review"
-									   placeholder="Enter your password" required="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>create account</h3>
+                <div class="theme-card">
+                    <form class="theme-form" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="form-row row">
+                            <div class="col-md-6">
+                                <label asp-for="Input.Email">email</label>
+                                <input type="email" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" id="email" placeholder="Email" required="">
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.Password">Password</label>
+                                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" type="password" id="review"
+                                       placeholder="Enter your password" required="">
 
-							</div>
-							<div class="form-row row">
-								<div class="col-md-6">
-									<label asp-for="Input.ConfirmPassword">Confirm Password</label>
-									<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" type="password" id="review"
-										   placeholder="Enter your password" required="">
-								</div>
-							</div>
-							<button id="registerSubmit" type="submit" class="btn btn-solid w-auto">create Account</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+                            <div class="form-row row">
+                                <div class="col-md-6">
+                                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" type="password" id="review"
+                                           placeholder="Enter your password" required="">
+                                </div>
+                            </div>
+                            <button id="registerSubmit" type="submit" class="btn btn-solid w-auto">create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!--Section ends-->
 @section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

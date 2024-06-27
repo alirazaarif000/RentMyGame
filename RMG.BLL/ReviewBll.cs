@@ -2,6 +2,7 @@
 using RMG.DAL.Repository;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
+using RMG.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace RMG.BLL
         {
             try
             {
-                List<Review> reviews = _uow.Review.GetAll().ToList();
+                List<Review> reviews = _uow.Review.GetAll(r=>r.Status==SD.ApprovedReview).ToList();
                 if (GameId != null)
                 {
                     reviews= reviews.Where(u=>u.GameId == GameId).ToList();
@@ -119,7 +120,7 @@ namespace RMG.BLL
         {
             try
             {
-                List<Review> reviews = _uow.Review.GetAll(r=>r.IsApproved==false, IncludeProperties: "ApplicationUser,Game").ToList();
+                List<Review> reviews = _uow.Review.GetAll(r=>r.Status==SD.ApprovalPendingReview, IncludeProperties: "ApplicationUser,Game").ToList();
                 return new Result<List<Review>>
                 {
                     Status = true,
@@ -137,6 +138,7 @@ namespace RMG.BLL
 			try
 			{
                 Review review= _uow.Review.Get(r => r.Id == id);
+                review.Status = SD.ApprovedReview;
                 review.IsApproved = true;
 				_uow.Review.Update(review);
 				_uow.Save();
@@ -144,7 +146,8 @@ namespace RMG.BLL
 				{
 					Status = true,
 					Data = null,
-					StatusCode = 200
+					StatusCode = 200,
+                    Message="Review Approved"
 				};
 			}
 			catch (Exception ex)
@@ -152,5 +155,27 @@ namespace RMG.BLL
 				return new Result<object> { Status = true, Data = null, StatusCode = 200 };
 			}
 		}
-	}
+        public Result<object> RejectReview(int id)
+        {
+            try
+            {
+                Review review = _uow.Review.Get(r => r.Id == id);
+                review.Status = SD.RejectedReview;
+                review.IsApproved = false;
+                _uow.Review.Update(review);
+                _uow.Save();
+                return new Result<object>
+                {
+                    Status = true,
+                    Data = null,
+                    StatusCode = 200,
+                    Message = "Review Rejected"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<object> { Status = true, Data = null, StatusCode = 200 };
+            }
+        }
+    }
 }

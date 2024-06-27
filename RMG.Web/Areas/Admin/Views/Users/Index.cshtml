@@ -1,0 +1,57 @@
+﻿                <!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        User List
+                        <small>Multikart Admin panel</small>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ol class="breadcrumb pull-right">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <i data-feather="home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Users</li>
+                    <li class="breadcrumb-item active">User List</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <form class="form-inline search-form search-box">
+                <div class="form-group">
+                    <input class="form-control-plaintext" type="search" placeholder="Search.."><span class="d-sm-none mobile-search"><i data-feather="search"></i></span>
+                </div>
+            </form>
+
+            <a asp-controller="Users" asp-action="Create" class="btn btn-primary mt-md-0 mt-2">Create User</a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive table-desi">
+                <table id="tblData" class="all-package coupon-table table table-striped">
+                    <thead>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+
+@section Scripts{
+    @{
+        <script src="~/jsfiles/user.js"></script>
+    }
+}

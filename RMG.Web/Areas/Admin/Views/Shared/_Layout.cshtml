@@ -321,9 +321,30 @@
                             </a>
                             <ul class="sidebar-submenu">
                                 <li>
-                                    <a asp-controller="Genre" asp-action="Index">
+                                    <a asp-controller="Review" asp-action="Index">
                                         <i class="fa fa-circle"></i>
                                         <span>Reviews List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href="javascript:void(0)">
+                                <i data-feather="archive"></i>
+                                <span>Users</span>
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a asp-controller="Users" asp-action="Index">
+                                        <i class="fa fa-circle"></i>
+                                        <span>Users List</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Users" asp-action="Create">
+                                        <i class="fa fa-circle"></i>
+                                        <span>Create User</span>
                                     </a>
                                 </li>
                             </ul>
