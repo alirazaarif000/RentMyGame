@@ -17,6 +17,7 @@ namespace RMG.DAL.Repository.IRepository
 		IRentalRepository Rental { get; }
 		ISubscriptionHistoryRepository SubscriptionHistory { get; }
 		IReviewRepository Review { get; }
+		INotificationRepository Notification { get; }
        
         void Save();
     }

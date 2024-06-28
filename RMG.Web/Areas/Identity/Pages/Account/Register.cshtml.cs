@@ -29,7 +29,7 @@ namespace RMG.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly IUserRegistrationService _userRegistrationService;
+        private readonly IUserService _userService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<IdentityUser> _userStore;
@@ -39,14 +39,14 @@ namespace RMG.Web.Areas.Identity.Pages.Account
 
         public RegisterModel(
             ILogger<RegisterModel> logger,
-            IUserRegistrationService userRegistrationService,
+            IUserService userService,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager
             )
         {
-            _userRegistrationService = userRegistrationService;
+            _userService = userService;
             _userManager = userManager;
             _roleManager = roleManager;
             _userStore = userStore;
@@ -81,7 +81,7 @@ namespace RMG.Web.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var result = await _userRegistrationService.RegisterUserAsync(Input, User);
+                var result = await _userService.RegisterUserAsync(Input, User);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "BuySubscription", new { area = "Customer" });

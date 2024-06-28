@@ -24,10 +24,10 @@ namespace RMG.Web.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IUserRegistrationService _userRegistrationService;
+        private readonly IUserService _userRegistrationService;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IUserRegistrationService userRegistrationService)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IUserService userRegistrationService)
         {
             _signInManager = signInManager;
             _logger = logger;

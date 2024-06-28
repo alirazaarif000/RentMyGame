@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RMG.Utility;
 using System.Diagnostics;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
-	public class HomeController : Controller
+	[Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
+    public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 

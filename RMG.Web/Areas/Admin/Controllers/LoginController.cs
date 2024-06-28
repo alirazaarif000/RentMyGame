@@ -10,8 +10,8 @@ namespace RMG.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoginController : Controller
     {
-        private readonly IUserRegistrationService _registrationService;
-        public LoginController(IUserRegistrationService registrationService)
+        private readonly IUserService _registrationService;
+        public LoginController(IUserService registrationService)
         {
             _registrationService = registrationService;
         }

@@ -1,0 +1,25 @@
+﻿@model List<Breadcrumb>
+
+<div class="col-lg-6">
+    <ol class="breadcrumb pull-right">
+        <li class="breadcrumb-item">
+            <a>
+                <i data-feather="home"></i>
+            </a>
+        </li>
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            var breadcrumb = Model[i];
+            if (i == Model.Count - 1)
+            {
+                <li class="breadcrumb-item active">@breadcrumb.Title</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item">
+                    <a href="@breadcrumb.Url">@breadcrumb.Title</a>
+                </li>
+            }
+        }
+    </ol>
+</div>

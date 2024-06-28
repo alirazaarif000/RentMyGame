@@ -18,6 +18,8 @@ namespace RMG.Models
 		public Subscription Subscription { get; set; }
 		[NotMapped]
 		public string Role {  get; set; }
+		public string FullName { get; set; }
+
 
 	}
 }

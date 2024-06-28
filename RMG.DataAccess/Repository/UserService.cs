@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace RMG.DAL.Repository
 {
-    public class UserRegistrationService : IUserRegistrationService
+    public class UserService : IUserService
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -27,7 +27,7 @@ namespace RMG.DAL.Repository
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IEmailSender _emailSender;
 
-        public UserRegistrationService(
+        public UserService(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IUserStore<IdentityUser> userStore,
@@ -46,6 +46,7 @@ namespace RMG.DAL.Repository
         {
             var user = CreateUser();
             user.SubscriptionId = null;
+            user.FullName= model.FullName;
             await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -113,5 +114,6 @@ namespace RMG.DAL.Repository
 
             return result;
         }
+
     }
 }

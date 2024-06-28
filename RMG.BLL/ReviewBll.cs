@@ -14,9 +14,11 @@ namespace RMG.BLL
     public class ReviewBll
     {
         private readonly IUnitOfWork _uow;
-        public ReviewBll(IUnitOfWork uow)
+        private readonly NotificationBll _notificationBll;
+        public ReviewBll(IUnitOfWork uow, NotificationBll notificationBll)
         {
             _uow = uow;
+            _notificationBll = notificationBll;
         }
         public Result<List<Review>> GetAllReview(int? GameId=null)
         {
@@ -62,6 +64,14 @@ namespace RMG.BLL
             {
                 _uow.Review.Add(review);
                 _uow.Save();
+                var notification = new Notification
+                {
+                    ApplicationUserId = review.ApplicationUserId,
+                    Message = review.Comment,
+                    IsRead = false,
+                    CreatedAt = DateTime.Now
+                };
+                _notificationBll.AddNotification(notification);
                 return new Result<object>
                 {
                     Status = true,

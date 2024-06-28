@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RMG.DAL.Repository.IRepository
 {
-    public interface IUserRegistrationService
+    public interface IUserService
     {
         Task<IdentityResult> RegisterUserAsync(RegisterVM model,ClaimsPrincipal user);
         Task<SignInResult> LoginUserAsync(LoginVM model, string Role);

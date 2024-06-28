@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["ActivePage"] = ManageNavPages.Index; 
 }
 
 <h3>@ViewData["Title"]</h3>
@@ -24,7 +24,58 @@
         </form>
     </div>
 </div>
-
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>profile</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!-- personal deatail section start -->
+<section class="contact-page register-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>PERSONAL DETAIL</h3>
+                <form class="theme-form" method="post">
+                    <div class="form-row row">
+                        <div class="col-md-6">
+                            <label for="email">Full Name</label>
+                            <input  type="text" class="form-control" id="last-name" placeholder="Full Name" required="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email</label>
+                            <input asp-for="Username" type="text" class="form-control" id="email" placeholder="Email" required="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="review">Phone number</label>
+                            <input asp-for="Input.PhoneNumber" type="text" class="form-control" id="review" placeholder="Enter your number"
+                                   required="">
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-sm btn-solid" type="submit">Save setting</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

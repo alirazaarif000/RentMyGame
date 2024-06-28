@@ -291,6 +291,8 @@ namespace RMG.BLL
                     Status = "Active"
                 };
                 _rentalBll.AddRental(newRental);
+                game.Stock = game.Stock-1;
+                UpdateGame(game);
 
                 return new Result<object> { Status = true, Message = "Game rented successfully.", Data = newRental };
             }
@@ -378,7 +380,8 @@ namespace RMG.BLL
                 returnGame.Status=SD.ReturnedStatus;
                 returnGame.ReturnDate= DateTime.Now;
 				_rentalBll.UpdateRental(returnGame);
-
+                game.Stock += game.Stock;
+                UpdateGame(game);
 				return new Result<object> { Status = true, Message = "Game Returned successfully.", Data = returnGame };
 			}
 			catch (Exception ex)

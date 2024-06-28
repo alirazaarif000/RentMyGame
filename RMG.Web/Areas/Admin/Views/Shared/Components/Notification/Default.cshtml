@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Notification>
+
+<li class="onhover-dropdown">
+    <i data-feather="bell"></i>
+    <span class="badge badge-pill badge-primary pull-right notification-badge">@Model.Count(n => !n.IsRead)</span>
+    <span class="dot"></span>
+    <ul class="notification-dropdown onhover-show-div p-0">
+        <li>Notification <span class="badge badge-pill badge-primary pull-right">@Model.Count(n => !n.IsRead)</span></li>
+        @foreach (var notify in Model)
+        {
+            @if (notify.IsRead)
+            {
+                <a asp-controller="Review" asp-action="Index">
+                <li>
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 class="mt-0 txt-danger">
+                                <span>
+                                    <i class="fas fa-comments alert-color"></i>
+                                </span>Review Added By @notify.ApplicationUser
+                            </h6>
+                            <p class="mb-0">@notify.Message</p>
+                        </div>
+                    </div>
+                </li>
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Review" asp-action="Index">
+                <li>
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 class="mt-0">
+                                <span>
+                                    <i class="fas fa-comments shopping-color"></i>
+                                </span>Review Added By @notify.ApplicationUser
+                            </h6>
+                            <p class="mb-0">@notify.Message</p>
+                        </div>
+                    </div>
+                </li>
+                </a>
+            }
+        }
+    </ul>
+</li>

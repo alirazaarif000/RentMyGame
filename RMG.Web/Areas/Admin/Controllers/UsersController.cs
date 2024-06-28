@@ -1,27 +1,24 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RMG.BLL;
 using RMG.DAL;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
 using RMG.Models.ViewModels;
-using RMG.Utility;
 
 namespace RMG.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
     public class UsersController : Controller
     {
         private readonly ApplicationUserBll _applicationUserBll;
         private readonly ApplicationDbContext _context;
-        private readonly IUserRegistrationService _userRegistrationService;
-        public UsersController(ApplicationUserBll applicationUserBll, ApplicationDbContext context, IUserRegistrationService userRegistrationService)
+        private readonly IUserService _userService;
+        public UsersController(ApplicationUserBll applicationUserBll, ApplicationDbContext context, IUserService userService)
         {
             _applicationUserBll = applicationUserBll;
             _context = context;
-            _userRegistrationService = userRegistrationService;
+            _userService = userService;
         }
         public IActionResult Index()
         {
@@ -38,7 +35,7 @@ namespace RMG.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userRegistrationService.RegisterUserAsync(model, User);
+                var result = await _userService.RegisterUserAsync(model, User);
 
                 if (result.Succeeded)
                 {
