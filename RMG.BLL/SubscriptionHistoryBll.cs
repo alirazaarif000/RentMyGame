@@ -2,6 +2,7 @@
 using RMG.DAL.Repository;
 using RMG.DAL.Repository.IRepository;
 using RMG.Models;
+using RMG.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace RMG.BLL
         {
             try
             {
-                List<SubscriptionHistory> subscriptionHistorys = _uow.SubscriptionHistory.GetAll().ToList();
+                UpdateSubscriptionStatus();
+                List<SubscriptionHistory> subscriptionHistorys = _uow.SubscriptionHistory.GetAll(IncludeProperties:"Subscription").ToList();
                 return new Result<List<SubscriptionHistory>>
                 {
                     Status = true,
@@ -38,6 +40,7 @@ namespace RMG.BLL
         {
             try
             {
+                UpdateSubscriptionStatus();
                 SubscriptionHistory subscriptionHistory = _uow.SubscriptionHistory.Get(u=> u.Id==id);
                 return new Result<SubscriptionHistory>
                 {
@@ -108,6 +111,51 @@ namespace RMG.BLL
             catch(Exception ex) 
             {
                 return new Result<object> { Status = false, Message = ex.Message };
+            }
+        }
+        public Result<object> UpdateSubscriptionStatus()
+        {
+            try
+            {
+                List<SubscriptionHistory> subscriptions = _uow.SubscriptionHistory.GetAll(s => s.Status == SD.ActiveSubs).ToList();
+                foreach (var subscription in subscriptions) 
+                {
+                    if (subscription.EndDate < DateTime.Now)
+                    {
+                        subscription.Status = SD.ExpiredSubs;
+                       UpdateSubscriptionHistory(subscription);
+                        _uow.Save();
+                    }
+                }
+                
+                return new Result<object>
+                {
+                    Status = true,
+                    Data = null,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<object> { Status = true, Data = null, StatusCode = 200 };
+            }
+        }
+        public Result<SubscriptionHistory> GetUserSubscription(string id)
+        {
+            try
+            {
+                UpdateSubscriptionStatus();
+                SubscriptionHistory subscriptionHistory = _uow.SubscriptionHistory.Get(s => s.ApplicationUserId == id && s.Status==SD.ActiveSubs, IncludeProperties: "Subscription");
+                return new Result<SubscriptionHistory>
+                {
+                    Status = true,
+                    Data = subscriptionHistory,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<SubscriptionHistory> { Status = false, Message = ex.Message };
             }
         }
     }

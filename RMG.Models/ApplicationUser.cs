@@ -19,7 +19,9 @@ namespace RMG.Models
 		[NotMapped]
 		public string Role {  get; set; }
 		public string FullName { get; set; }
-
-
-	}
+        [ValidateNever]
+        public DateTime CreatedDate { get; set; }
+        [ValidateNever]
+        public string CreatedBy { get; set; }
+    }
 }

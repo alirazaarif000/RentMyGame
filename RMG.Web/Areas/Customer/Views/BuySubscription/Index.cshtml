@@ -81,18 +81,14 @@
                                 </div>
                             </div>
                                 <div class="btn-part">
-                                @if (sub.Id == Model.SubscribedId)
+                                @if (sub.Id == Model.SubscriptionHistory?.SubscriptionId)
                                 {
                                     <button asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" disabled class="btn btn-success">Purchased</button>
                                     
                                 }
-                                else if (Model.SubscribedId == null)
-                                {
-                                    <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Buy Now</a>
-                                }
                                 else
                                 {
-                                    <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Upgrade Now</a>
+                                    <a asp-controller="BuySubscription" asp-action="Buy" asp-route-Id="@sub.Id" class="btn btn-solid">Buy Now</a>
                                 }
                                 </div>
                             </div>

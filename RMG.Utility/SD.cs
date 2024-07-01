@@ -22,5 +22,8 @@ namespace RMG.Utility
 
         public const string Role_Admin = "Admin";
         public const string Role_Customer = "Customer";
+
+        public const string ActiveSubs = "Active";
+        public const string ExpiredSubs = "Expired";
     }
 }

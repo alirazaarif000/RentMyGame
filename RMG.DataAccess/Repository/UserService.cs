@@ -46,7 +46,9 @@ namespace RMG.DAL.Repository
         {
             var user = CreateUser();
             user.SubscriptionId = null;
-            user.FullName= model.FullName;
+            user.FullName = model.FullName;
+            user.CreatedDate = DateTime.UtcNow;
+            user.CreatedBy= model.FullName;
             await _userStore.SetUserNameAsync(user, model.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, model.Email, CancellationToken.None);
             var result = await _userManager.CreateAsync(user, model.Password);

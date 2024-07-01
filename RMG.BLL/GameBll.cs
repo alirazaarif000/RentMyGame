@@ -19,12 +19,14 @@ namespace RMG.BLL
         private readonly ApplicationUserBll _userBll;
         private readonly RentalBll _rentalBll;
         private readonly ReviewBll _reviewBll;
-        public GameBll(IUnitOfWork uow, ApplicationUserBll userBll, RentalBll rentalBll, ReviewBll reviewBll)
+        private readonly SubscriptionHistoryBll _subscriptionHistoryBll;
+        public GameBll(IUnitOfWork uow, ApplicationUserBll userBll, RentalBll rentalBll, ReviewBll reviewBll, SubscriptionHistoryBll subscriptionHistoryBll)
         {
             _uow = uow;
             _userBll = userBll;
             _rentalBll = rentalBll;
             _reviewBll = reviewBll;
+            _subscriptionHistoryBll = subscriptionHistoryBll;
         }
         public Result<List<Game>> GetAllGame()
         {
@@ -198,18 +200,6 @@ namespace RMG.BLL
         {
             try
             {
-                var userResult = _userBll.GetApplicationUser(id);
-                if (!userResult.Status)
-                {
-                    return new Result<object> { Status = false, Message = "User not found." };
-                }
-                ApplicationUser user = userResult.Data;
-
-                if (user.SubscriptionId == null)
-                {
-                    return new Result<object> { Status = false, Message = "User does not have an active subscription." };
-                }
-
                 Result<List<Rental>> rentGamesResult = _rentalBll.GetAllRental(id);
                 if (!rentGamesResult.Status)
                 {
@@ -217,12 +207,11 @@ namespace RMG.BLL
                 }
                 List<Rental> rentGames = rentGamesResult.Data ?? new List<Rental>();
                 List<Rental> activeRentGames = rentGames.Where(r => r.Status == SD.ActiveStatus).ToList();
-				Subscription subscription = user.Subscription;
+                SubscriptionHistory subscription = _subscriptionHistoryBll.GetUserSubscription(id).Data;
                 if (subscription == null)
                 {
                     return new Result<object> { Status = false, Message = "User subscription not found." };
                 }
-
                 var gameResult = GetGame(gameId);
                 if (!gameResult.Status)
                 {
@@ -236,7 +225,7 @@ namespace RMG.BLL
 
                 DateOnly past3M = DateOnly.FromDateTime(DateTime.Now.AddMonths(-3));
 
-                switch (subscription.PackageName)
+                switch (subscription.Subscription.PackageName)
                 {
                     case SD.Basic:
                         if (activeRentGames.Count >= 2)
@@ -250,30 +239,37 @@ namespace RMG.BLL
                         break;
 
                     case SD.Premium:
-                        if (activeRentGames.Count >= 5)
+                        if (activeRentGames.Count >= 2)
                         {
                             return new Result<object> { Status = false, Message = "You have reached the rental limit for Premium subscription." };
                         }
-                        var activeRecentGamesCount = activeRentGames
+                        if (game.ReleaseDate > past3M)
+                        {
+                            var activeRecentGamesCount = activeRentGames
                             .Where(r => GetGame(r.GameId).Data?.ReleaseDate > past3M)
                             .Count();
-                        if (activeRecentGamesCount >= 1)
-                        {
-                            return new Result<object> { Status = false, Message = "You cannot rent more than one game released in the past 3 months with a Premium subscription." };
+                            if (activeRecentGamesCount >= 1)
+                            {
+                                return new Result<object> { Status = false, Message = "You cannot rent more than one game released in the past 3 months with a Premium subscription." };
+                            }
                         }
+                        
                         break;
 
                     case SD.PremiumMax:
-                        if (activeRentGames.Count >= 10)
+                        if (activeRentGames.Count >= 3 )
                         {
                             return new Result<object> { Status = false, Message = "You have reached the rental limit for PremiumMax subscription." };
                         }
-                        var activeRecentGamesMax = activeRentGames
+                        if (game.ReleaseDate > past3M)
+                        {
+                            var activeRecentGamesMax = activeRentGames
                             .Where(r => GetGame(r.GameId).Data?.ReleaseDate > past3M)
                             .Count();
-                        if (activeRecentGamesMax >= 2)
-                        {
-                            return new Result<object> { Status = false, Message = "You cannot rent more than two games released in the past 3 months with a PremiumMax subscription." };
+                            if (activeRecentGamesMax >= 2)
+                            {
+                                return new Result<object> { Status = false, Message = "You cannot rent more than two games released in the past 3 months with a PremiumMax subscription." };
+                            }
                         }
                         break;
 
@@ -284,7 +280,7 @@ namespace RMG.BLL
                 // Logic to rent the game
                 Rental newRental = new Rental
                 {
-                    ApplicationUserId = user.Id,
+                    ApplicationUserId = id,
                     GameId = gameId,
                     RentalDate = DateTime.Now,
                     ReturnDate = DateTime.Now.AddMonths(1),
@@ -307,18 +303,12 @@ namespace RMG.BLL
 		{
 			try
 			{
-				var userResult = _userBll.GetApplicationUser(id);
-               
-				if (!userResult.Status)
-				{
-					return new Result<object> { Status = false, Message = "User not found." };
-				}
-				ApplicationUser user = userResult.Data;
+                SubscriptionHistory subscription = _subscriptionHistoryBll.GetUserSubscription(id).Data;
+                if (subscription == null)
+                {
+                    return new Result<object> { Status = false, Message = "User does not have an active subscription." };
+                }
 
-				if (user.SubscriptionId == null)
-				{
-					return new Result<object> { Status = false, Message = "User does not have an active subscription." };
-				}
 				Result<List<Rental>> rentGamesResult = _rentalBll.GetAllRental(id);
 				if (!rentGamesResult.Status)
 				{
@@ -330,12 +320,6 @@ namespace RMG.BLL
 				List<Rental> allReturnedGames = rentGames.Where(r => r.Status == SD.ReturnedStatus &&
 				subscriptionHistories.Any(sh => r.ReturnDate >= sh.StartDate && r.ReturnDate <= sh.EndDate)).ToList();
 
-				Subscription subscription = user.Subscription;
-				if (subscription == null)
-				{
-					return new Result<object> { Status = false, Message = "User subscription not found." };
-				}
-
 				var gameResult = GetGame(gameId);
 				if (!gameResult.Status)
 				{
@@ -343,7 +327,7 @@ namespace RMG.BLL
 				}
 				Game game = gameResult.Data;
 
-				switch (subscription.PackageName)
+				switch (subscription.Subscription.PackageName)
 				{
 					case SD.Basic:
 						return new Result<object> { Status = false, Message = "Replace or Return Game are not allowed in Basic subscription." };
