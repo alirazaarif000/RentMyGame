@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace RMG.Models.ViewModels
 {
-	public class SubscriptionVM
-	{
-		public List<Subscription> Subscription {  get; set; }
-		public SubscriptionHistory SubscriptionHistory { get; set; }
-	}
+    internal class DashboardVM
+    {
+    }
 }

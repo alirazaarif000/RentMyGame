@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace RMG.Models
 {
 	public class Rental
-	{
+    {
 		[Key]
 		public int Id { get; set; }
 		public string ApplicationUserId { get; set; }

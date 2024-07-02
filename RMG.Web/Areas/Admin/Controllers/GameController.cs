@@ -65,6 +65,8 @@ namespace RMG.Web.Areas.Admin.Controllers
                     }
                     gameVM.Game.ImageUrl = @"\admin\images\games\" + fileName;
                 }
+                gameVM.Game.CreatedDate = DateTime.Now;
+                gameVM.Game.CreatedBy = User.Identity.Name;
                 if (gameVM.Game.Id == 0)
                 {
                     _gameBll.AddGame(gameVM.Game);
@@ -80,7 +82,9 @@ namespace RMG.Web.Areas.Admin.Controllers
             }
             else
             {
-                return View(gameVM);
+                GameVM gameVm = _gameBll.BindGameDropdowns().Data;
+                gameVm.Game = gameVM.Game;
+                return View(gameVm);
             }
         }
 

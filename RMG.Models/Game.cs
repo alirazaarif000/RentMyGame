@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RMG.Models
 {
-    public class Game
+    public class Game:CreationDetail
     {
         [Key]
         public int Id { get; set; }

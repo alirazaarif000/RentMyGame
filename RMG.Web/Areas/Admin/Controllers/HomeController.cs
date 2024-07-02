@@ -21,6 +21,6 @@ namespace RMG.Web.Areas.Admin.Controllers
 			return View();
 		}
 
-
+		
 	}
 }

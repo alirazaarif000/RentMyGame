@@ -14,11 +14,13 @@ namespace RMG.Web.Areas.Customer.Controllers
         private readonly SubscriptionBll _subscriptionBll;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationUserBll _applicationUserBll;
-        public BuySubscriptionController(SubscriptionBll subscriptionBll, SignInManager<IdentityUser> signInManager, ApplicationUserBll applicationUserBll)
+        private readonly SubscriptionHistoryBll _subscriptionHistoryBll;
+        public BuySubscriptionController(SubscriptionBll subscriptionBll, SignInManager<IdentityUser> signInManager, ApplicationUserBll applicationUserBll, SubscriptionHistoryBll subscriptionHistoryBll)
         {
             _subscriptionBll = subscriptionBll;
             _signInManager = signInManager;
             _applicationUserBll = applicationUserBll;
+            _subscriptionHistoryBll = subscriptionHistoryBll;
         }
 
         public IActionResult Index()
@@ -26,7 +28,7 @@ namespace RMG.Web.Areas.Customer.Controllers
             SubscriptionVM subscriptionVM = new()
             {
                 Subscription= _subscriptionBll.GetAllSubscription().Data,
-                SubscribedId= null,
+                SubscriptionHistory = new SubscriptionHistory(),
                 
 			};
             if (_signInManager.IsSignedIn(User))
@@ -34,9 +36,7 @@ namespace RMG.Web.Areas.Customer.Controllers
 				var claimsIdentity = (ClaimsIdentity)User.Identity;
 				var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
                 ApplicationUser user= _applicationUserBll.GetApplicationUser(userId).Data;
-                if (user.SubscriptionId != null) {
-                    subscriptionVM.SubscribedId = user.SubscriptionId;
-                }
+                subscriptionVM.SubscriptionHistory = _subscriptionHistoryBll.GetUserSubscription(userId).Data;
 			}
             return View(subscriptionVM);
         }
