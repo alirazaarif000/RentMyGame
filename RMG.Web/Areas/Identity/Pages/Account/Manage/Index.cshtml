@@ -7,7 +7,7 @@
 
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
+@* <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -23,9 +23,9 @@
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
-</div>
+</div> *@
 <!-- breadcrumb start -->
-<div class="breadcrumb-section">
+@* <div class="breadcrumb-section">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 <!-- breadcrumb End -->
 <!-- personal deatail section start -->
 <section class="contact-page register-page">
@@ -54,12 +54,12 @@
                 <form class="theme-form" method="post">
                     <div class="form-row row">
                         <div class="col-md-6">
-                            <label for="email">Full Name</label>
-                            <input  type="text" class="form-control" id="last-name" placeholder="Full Name" required="">
+                            <label for="name">Full Name</label>
+                            <input asp-for ="Input.FullName" type="text" class="form-control" id="last-name" placeholder="Full Name" required="">
                         </div>
                         <div class="col-md-6">
-                            <label for="email">Email</label>
-                            <input asp-for="Username" type="text" class="form-control" id="email" placeholder="Email" required="">
+                            <label for="UserName">UserName</label>
+                            <input asp-for="Input.UserName" type="text" class="form-control" id="email" placeholder="User Name" required="">
                         </div>
                         <div class="col-md-6">
                             <label for="review">Phone number</label>
