@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using RMG.Utility;
 using RMG.Models;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHostedService<SubscriptionService>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<GenreBll>();
@@ -23,6 +27,7 @@ builder.Services.AddScoped<ApplicationUserBll>();
 builder.Services.AddScoped<SubscriptionHistoryBll>();
 builder.Services.AddScoped<ReviewBll>();
 builder.Services.AddScoped<NotificationBll>();
+builder.Services.AddScoped<DashboardBll>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBreadcrumbService, BreadcrumbService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

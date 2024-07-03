@@ -114,18 +114,21 @@ namespace RMG.BLL
                 return new Result<object> { Status = false, Message = ex.Message };
             }
         }
-		public Result<object> BuySubscription(int SubscriptionId, string UserId)
+		public Result<object> BuySubscription(SubscribeDTO sub, string UserId)
 		{
 			try
 			{
                 ApplicationUser User= _uow.ApplicationUser.Get(u=> u.Id==UserId);
-                User.SubscriptionId = SubscriptionId;
+                User.SubscriptionId = sub.SubcriptionId;
+                
                 SubscriptionHistory subscriptionHistory = new()
                 {
                     ApplicationUserId = User.Id,
-                    SubscriptionId = SubscriptionId,
+                    SubscriptionId = sub.SubcriptionId,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(1),
+                    NoOfMonths= sub.NoOfMonths,
+                    PricePaid= sub.PricePaid,
                     Status = SD.ActiveStatus
                 };
                 _subsHistoryBll.AddSubscriptionHistory(subscriptionHistory);

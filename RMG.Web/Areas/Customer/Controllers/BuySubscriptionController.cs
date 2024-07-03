@@ -25,27 +25,27 @@ namespace RMG.Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            SubscriptionVM subscriptionVM = new()
-            {
-                Subscription= _subscriptionBll.GetAllSubscription().Data,
-                SubscriptionHistory = new SubscriptionHistory(),
+   //         SubscriptionVM subscriptionVM = new()
+   //         {
+   //             Subscription= _subscriptionBll.GetAllSubscription().Data,
+   //             SubscriptionHistory = new SubscriptionHistory(),
                 
-			};
-            if (_signInManager.IsSignedIn(User))
-            {
-				var claimsIdentity = (ClaimsIdentity)User.Identity;
-				var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-                ApplicationUser user= _applicationUserBll.GetApplicationUser(userId).Data;
-                subscriptionVM.SubscriptionHistory = _subscriptionHistoryBll.GetUserSubscription(userId).Data;
-			}
-            return View(subscriptionVM);
+			//};
+   //         if (_signInManager.IsSignedIn(User))
+   //         {
+			//	var claimsIdentity = (ClaimsIdentity)User.Identity;
+			//	var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+   //             ApplicationUser user= _applicationUserBll.GetApplicationUser(userId).Data;
+   //             subscriptionVM.SubscriptionHistory = _subscriptionHistoryBll.GetUserSubscription(userId).Data;
+			//}
+            return View();
         }
         [Authorize]
-        public IActionResult Buy(int id)
+        public IActionResult Buy(SubscribeDTO sub)
         {
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Result<object> result = _subscriptionBll.BuySubscription(id, userId);
+            Result<object> result = _subscriptionBll.BuySubscription(sub, userId);
 
             if (result.Status == true) {
             TempData["success"] = "Subscription Bought Successfully";
@@ -54,5 +54,14 @@ namespace RMG.Web.Areas.Customer.Controllers
 			TempData["error"] = "An error occured";
             return RedirectToAction("Index", "Games");
 		}
+
+
+        //Api's
+
+        public IActionResult GetSubscriptionsData()
+        {
+            List<Subscription> subscriptions = _subscriptionBll.GetAllSubscription().Data;
+            return Json(subscriptions);
+        }
     }
 }

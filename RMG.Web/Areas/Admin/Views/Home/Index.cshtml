@@ -29,9 +29,9 @@
                         <div class="media-body media-doller">
                             <span class="m-0">Earnings</span>
                             <h3 class="mb-0">
-                                $ <span class="counter">6659</span><small>
-                                    This
-                                    Month
+                                $ <span id="earning" class="counter"></span><small>
+                                    Last 30
+                                    Days
                                 </small>
                             </h3>
                         </div>
@@ -49,11 +49,11 @@
                             </div>
                         </div>
                         <div class="media-body media-doller">
-                            <span class="m-0">Products</span>
+                            <span  class="m-0"> New Games</span>
                             <h3 class="mb-0">
-                                $ <span class="counter">9856</span><small>
-                                    This
-                                    Month
+                                <span id="newGames" class="counter"></span><small>
+                                    Last 30
+                                    Days
                                 </small>
                             </h3>
                         </div>
@@ -67,16 +67,16 @@
                     <div class="media static-top-widget align-items-center">
                         <div class="icons-widgets">
                             <div class="align-self-center text-center">
-                                <i data-feather="message-square"
+                                <i data-feather="monitor"
                                    class="font-primary"></i>
                             </div>
                         </div>
                         <div class="media-body media-doller">
-                            <span class="m-0">Messages</span>
+                            <span class="m-0">Rented Games</span>
                             <h3 class="mb-0">
-                                $ <span class="counter">893</span><small>
-                                    This
-                                    Month
+                                 <span id="rentedGames"class="counter"></span><small>
+                                    Last 30
+                                    Days
                                 </small>
                             </h3>
                         </div>
@@ -95,11 +95,11 @@
                             </div>
                         </div>
                         <div class="media-body media-doller">
-                            <span class="m-0">New Vendors</span>
+                            <span class="m-0">New Registered Users</span>
                             <h3 class="mb-0">
-                                $ <span class="counter">5631</span><small>
-                                    This
-                                    Month
+                                 <span id="newUsers" class="counter"></span><small>
+                                    Last 30
+                                    Days
                                 </small>
                             </h3>
                         </div>
@@ -107,5 +107,38 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-6 xl-100">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Latest Products</h5>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product ID</th>
+                                    <th scope="col">Game Name</th>
+                                    <th scope="col">Genre</th>
+                                    <th scope="col">Platform</th>
+                                    <th scope="col">Release Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="latestProducts">
+                                
+                            </tbody>
+                        </table>
+                        <a asp-controller="Game" asp-action="Index" class="btn btn-primary mt-4">View All Products</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
 </div>
 </div>
+
+@section Scripts{
+    @{
+        <script src="~/jsfiles/dashboard.js"></script>
+    }
+}

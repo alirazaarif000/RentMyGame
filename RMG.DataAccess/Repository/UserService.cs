@@ -69,6 +69,7 @@ namespace RMG.DAL.Repository
                     await _signInManager.SignInAsync(user, isPersistent: false);
                 }
             }
+
             return result;
         }
         private IUserEmailStore<IdentityUser> GetEmailStore()

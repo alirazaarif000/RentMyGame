@@ -15,6 +15,8 @@ namespace RMG.Models
 		public int SubscriptionId { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
+		public int NoOfMonths { get; set; }
+		public double PricePaid { get; set; }
 		public string Status { get; set; }
 
 		[ForeignKey(nameof(ApplicationUserId))]

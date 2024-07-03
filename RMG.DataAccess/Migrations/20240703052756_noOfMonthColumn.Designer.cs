@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RMG.DAL;
 
@@ -11,9 +12,11 @@ using RMG.DAL;
 namespace RMG.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240703052756_noOfMonthColumn")]
+    partial class noOfMonthColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -468,9 +471,6 @@ namespace RMG.DAL.Migrations
 
                     b.Property<int>("NoOfMonths")
                         .HasColumnType("int");
-
-                    b.Property<double>("PricePaid")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");

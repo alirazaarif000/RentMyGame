@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RMG.BLL;
+using RMG.Models;
 using RMG.Utility;
 using System.Diagnostics;
 
@@ -9,11 +11,11 @@ namespace RMG.Web.Areas.Admin.Controllers
     [Authorize(Roles = SD.Role_Admin)]
     public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly DashboardBll _dashboardBll;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(DashboardBll dashboardBll)
 		{
-			_logger = logger;
+			_dashboardBll = dashboardBll;
 		}
 
 		public IActionResult Index()
@@ -21,6 +23,15 @@ namespace RMG.Web.Areas.Admin.Controllers
 			return View();
 		}
 
-		
+		public IActionResult GetStats()
+		{
+			Object stats = _dashboardBll.GetDashboardStats().Data;
+			return Json(stats);
+		}
+		public IActionResult GetLatestProduct()
+		{
+			List<Game> games = _dashboardBll.GetlatestProducts().Data;
+			return Json(games);
+		}
 	}
 }

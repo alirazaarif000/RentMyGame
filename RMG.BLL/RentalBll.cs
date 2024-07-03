@@ -22,7 +22,7 @@ namespace RMG.BLL
         {
             try
             {
-                List<Rental> rentals = _uow.Rental.GetAll(u=>u.ApplicationUserId==id && u.RentalDate >= DateTime.Now.AddMonths(-1), IncludeProperties:"Game" ).ToList();
+                List<Rental> rentals = _uow.Rental.GetAll(u=>u.ApplicationUserId==id, IncludeProperties:"Game" ).ToList();
                 if (status != null) {
                 rentals= rentals.Where(r=>r.Status == status).ToList();
                 }

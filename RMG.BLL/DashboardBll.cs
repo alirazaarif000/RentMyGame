@@ -24,55 +24,42 @@ namespace RMG.BLL
             _applicationUserBll = applicationUserBll;
         }
 
-        public Result<object> Get30DaysEarning()
+        public Result<object> GetDashboardStats()
         {
+            DateTime Days30Back = DateTime.Now.AddDays(-30);
             Result<List<SubscriptionHistory>> subscriptions = _SubhistoryBll.GetAllSubscriptionHistory();
             double TotalEarning = subscriptions.Data
-            .Where(sh => sh.Subscription != null && sh.StartDate >= DateTime.Now.AddDays(-30))
+            .Where(sh => sh.Subscription != null && sh.StartDate >= Days30Back)
             .Sum(sh => sh.Subscription.Price);
-            return new Result<object>
-            {
 
-                Status = true,
-                Data = TotalEarning,
-                StatusCode = 200
-            };
-        }
-
-        public Result<object> GetNewReleased()
-        {
             List<Game> games = _GameBll.GetAllGame().Data;
-            int gameCount = games.Where(g => g.CreatedDate >= DateTime.Now.AddDays(-30)).Count();
-            return new Result<object>
-            {
+            int GameCount = games.Where(g => g.CreatedDate >= Days30Back).Count();
 
-                Status = true,
-                Data = gameCount,
-                StatusCode = 200
-            };
-        }
-
-        public Result<object> NewlyRegisteredUser()
-        {
             List<ApplicationUser> users = _applicationUserBll.GetAllApplicationUser().Data;
-            int UserCount = users.Where(g => g.CreatedDate >= DateTime.Now.AddDays(-30)).Count();
+            int UserCount = users.Where(g => g.CreatedDate >= Days30Back).Count();
+
+            int RentalCount = _uow.Rental.GetAll(r => r.RentalDate >= Days30Back).Count();
+
             return new Result<object>
             {
-
                 Status = true,
-                Data = UserCount,
+                Data = new
+                {
+                    TotalEarning,
+                    GameCount,
+                    UserCount,
+                    RentalCount
+                },
                 StatusCode = 200
             };
         }
-
-        public Result<object> RentedGames()
+        public Result<List<Game>> GetlatestProducts()
         {
-            int RentalCount= _uow.Rental.GetAll(r=>r.RentalDate >= DateTime.Now.AddDays(-30)).Count();
-            return new Result<object>
+            List<Game> games = _GameBll.GetAllGame().Data.OrderByDescending(g => g.CreatedDate).Take(5).ToList();
+            return new Result<List<Game>>
             {
-
                 Status = true,
-                Data = RentalCount,
+                Data = games,
                 StatusCode = 200
             };
         }

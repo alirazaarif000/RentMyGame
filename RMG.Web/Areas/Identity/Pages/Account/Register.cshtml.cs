@@ -86,9 +86,12 @@ namespace RMG.Web.Areas.Identity.Pages.Account
                 {
                     return RedirectToAction("Index", "BuySubscription", new { area = "Customer" });
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
             return Page();
