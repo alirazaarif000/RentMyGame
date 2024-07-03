@@ -125,8 +125,10 @@ namespace RMG.BLL
                 {
                     ApplicationUserId = User.Id,
                     SubscriptionId = sub.SubcriptionId,
+                    SubscribedDate = DateTime.Now,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(1),
+                    RemainingMonths = sub.NoOfMonths,
                     NoOfMonths= sub.NoOfMonths,
                     PricePaid= sub.PricePaid,
                     Status = SD.ActiveStatus

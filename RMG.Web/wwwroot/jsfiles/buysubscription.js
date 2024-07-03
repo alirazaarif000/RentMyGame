@@ -9,7 +9,7 @@
 
                 subscriptions.forEach(function (sub) {
                     var html = `
-                    <div class="subscription-card">
+                    <div class="subscription-card shadow p-3 mb-5 bg-white rounded">
                         <div class="compare-part">
                             <div class="img-secton">
                                 <div></div>
@@ -67,11 +67,12 @@
                 });
 
                 // Attach event listeners after the elements are added to the DOM
-                    $('.month-input').on('input', function () {
+                $('.month-input').on('input', function () {
+                    debugger
                         var month = $(this).val();
                         var price = $(this).data('price');
                         var totalPrice = month * price;
-                        $(this).closest('.subscription-card').find('.total-price').text(totalPrice.toFixed(2));
+                        $(this).closest('.subscription-card').find('.total-price').text(totalPrice);
                     });
 
                 $('.buy-now').on('click', function () {
@@ -90,7 +91,7 @@
                         },
                         success: function (response) {
                             setTimeout(function () {
-                                window.location.href = '/Customer/Games';
+                                window.location.href = '/';
                             }, 2000);
                             toastr.success('Subscription purchased successfully!');
                             // Handle success response
