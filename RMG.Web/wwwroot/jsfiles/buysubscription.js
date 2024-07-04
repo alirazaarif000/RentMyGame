@@ -70,7 +70,7 @@ $(document).ready(function () {
                 // Attach event listeners after the elements are added to the DOM
                 $('.month-input').on('input', function () {
                     var month = $(this).val();
-                    if (month === '') {
+                    if (month < 1 || month === '') {
                         month = 1;
                         $this.val(1);
                     }
@@ -94,11 +94,11 @@ $(document).ready(function () {
                             NoOfMonths: month,
                             PricePaid: totalPrice
                         },
-                        success: function (response) {
+                        success: function (data) {
                             //setTimeout(function () {
                             //    window.location.href = '/';
                             //}, 2000);
-                            toastr.success('Subscription purchased successfully!');
+                            toastr.success(data.message);
                             // Handle success response
                            
                         },
@@ -130,7 +130,6 @@ $(document).ready(function () {
         })
     }
     function updateSubscriptionButtons() {
-        debugger
         if (GlobalVar.UserSubscription) {
             var button = $(`.buy-now[data-id='${GlobalVar.UserSubscription.subscriptionId}']`);
             if (button.length) {

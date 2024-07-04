@@ -33,16 +33,16 @@ namespace RMG.BLL
                     StatusCode = 200
                 };
             }
-            catch (Exception ex) 
-            { 
-                return new Result<List<Subscription>> { Status=false, Message = ex.Message };            
+            catch (Exception ex)
+            {
+                return new Result<List<Subscription>> { Status = false, Message = ex.Message };
             }
         }
         public Result<Subscription> GetSubscription(int? id)
         {
             try
             {
-                Subscription subscription = _uow.Subscription.Get(u=> u.Id==id);
+                Subscription subscription = _uow.Subscription.Get(u => u.Id == id);
                 return new Result<Subscription>
                 {
                     Status = true,
@@ -88,11 +88,11 @@ namespace RMG.BLL
             }
             catch (Exception ex)
             {
-                return new Result<object> { Status = true, Data=null, StatusCode=200 };
+                return new Result<object> { Status = true, Data = null, StatusCode = 200 };
             }
         }
 
-        public Result<object> DeleteSubscription(int id) 
+        public Result<object> DeleteSubscription(int id)
         {
             try
             {
@@ -105,22 +105,41 @@ namespace RMG.BLL
                 {
                     _uow.Subscription.Remove(SubscriptionToBeDeleted);
                     _uow.Save();
-                    return new Result<object> { Status = true, Data = null, StatusCode = 200, Message="Deleted Successfully" };
+                    return new Result<object> { Status = true, Data = null, StatusCode = 200, Message = "Deleted Successfully" };
                 }
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return new Result<object> { Status = false, Message = ex.Message };
             }
         }
-		public Result<object> BuySubscription(SubscribeDTO sub, string UserId)
-		{
-			try
-			{
-                ApplicationUser User= _uow.ApplicationUser.Get(u=> u.Id==UserId);
+        public Result<object> BuySubscription(SubscribeDTO sub, string UserId)
+        {
+            try
+            {
+                ApplicationUser User = _uow.ApplicationUser.Get(u => u.Id == UserId);
                 User.SubscriptionId = sub.SubcriptionId;
-                
+                SubscriptionHistory history = _subsHistoryBll.GetUserSubscription(UserId).Data;
+                if (history != null)
+                {
+                    if (sub.SubcriptionId < history.SubscriptionId)
+                    {
+                        List<Rental> rental = _uow.Rental.GetAll(u => u.ApplicationUserId == UserId && u.Status == SD.ActiveStatus).ToList();
+                        if (rental.Count > 0)
+                        {
+                            return new Result<object>
+                            {
+                                Status = false,
+                                Message = "Please Return the Games to Downgrade Subscription"
+                            };
+                        }
+                    }
+                    history.Status = SD.RenewedSubs;
+                    _uow.SubscriptionHistory.Update(history);
+                    _uow.Save();
+
+                }
                 SubscriptionHistory subscriptionHistory = new()
                 {
                     ApplicationUserId = User.Id,
@@ -129,24 +148,25 @@ namespace RMG.BLL
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddMonths(1),
                     RemainingMonths = sub.NoOfMonths,
-                    NoOfMonths= sub.NoOfMonths,
-                    PricePaid= sub.PricePaid,
+                    NoOfMonths = sub.NoOfMonths,
+                    PricePaid = sub.PricePaid,
                     Status = SD.ActiveStatus
                 };
                 _subsHistoryBll.AddSubscriptionHistory(subscriptionHistory);
-				_uow.ApplicationUser.Update(User);
-				_uow.Save();
-				return new Result<object>
-				{
-					Status = true,
-					Data = GetAllSubscription().Data,
-					StatusCode = 200
-				};
-			}
-			catch (Exception ex)
-			{
-				return new Result<object> { Status = false, Message = ex.Message };
-			}
-		}
-	}
+                _uow.ApplicationUser.Update(User);
+                _uow.Save();
+                return new Result<object>
+                {
+                    Status = true,
+                    Data = GetAllSubscription().Data,
+                    Message = "Successfully Subscription Updated",
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<object> { Status = false, Message = ex.Message };
+            }
+        }
+    }
 }

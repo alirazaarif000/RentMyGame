@@ -47,13 +47,7 @@ namespace RMG.Web.Areas.Customer.Controllers
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             Result<object> result = _subscriptionBll.BuySubscription(sub, userId);
-
-            if (result.Status == true) {
-            TempData["success"] = "Subscription Bought Successfully";
-            return RedirectToAction("Index","Games");
-            }
-			TempData["error"] = "An error occured";
-            return RedirectToAction("Index", "Games");
+            return Json(result.Message);
 		}
         [Authorize]
         public IActionResult GetUserSubscription()
