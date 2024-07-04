@@ -22,7 +22,6 @@ namespace RMG.BLL
         {
             try
             {
-                UpdateSubscriptionStatus();
                 List<SubscriptionHistory> subscriptionHistorys = _uow.SubscriptionHistory.GetAll(IncludeProperties:"Subscription").ToList();
                 return new Result<List<SubscriptionHistory>>
                 {
@@ -40,7 +39,6 @@ namespace RMG.BLL
         {
             try
             {
-                UpdateSubscriptionStatus();
                 SubscriptionHistory subscriptionHistory = _uow.SubscriptionHistory.Get(u=> u.Id==id);
                 return new Result<SubscriptionHistory>
                 {
@@ -144,7 +142,6 @@ namespace RMG.BLL
         {
             try
             {
-                UpdateSubscriptionStatus();
                 SubscriptionHistory subscriptionHistory = _uow.SubscriptionHistory.Get(s => s.ApplicationUserId == id && s.Status==SD.ActiveSubs, IncludeProperties: "Subscription");
                 return new Result<SubscriptionHistory>
                 {

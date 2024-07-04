@@ -1,13 +1,14 @@
-﻿$(document).ready(function () {
+﻿var GlobalVar = { subscriptions: [], UserSubscription:null}
+$(document).ready(function () {
     function loadSubscriptionData() {
         $.ajax({
             url: '/customer/BuySubscription/GetSubscriptionsData',
             method: 'GET',
             success: function (data) {
-                var subscriptions = data;
+                GlobalVar.subscriptions = data;
                 var body = $('#subscription');
 
-                subscriptions.forEach(function (sub) {
+                GlobalVar.subscriptions.forEach(function (sub) {
                     var html = `
                     <div class="subscription-card shadow p-3 mb-5 bg-white rounded">
                         <div class="compare-part">
@@ -68,8 +69,11 @@
 
                 // Attach event listeners after the elements are added to the DOM
                 $('.month-input').on('input', function () {
-                    debugger
-                        var month = $(this).val();
+                    var month = $(this).val();
+                    if (month === '') {
+                        month = 1;
+                        $this.val(1);
+                    }
                         var price = $(this).data('price');
                         var totalPrice = month * price;
                         $(this).closest('.subscription-card').find('.total-price').text(totalPrice);
@@ -78,6 +82,7 @@
                 $('.buy-now').on('click', function () {
                     var subscriptionId = $(this).data('id');
                     var month = $(this).closest('.subscription-card').find('.month-input').val();
+                    console.log(subscriptionId, month);
                     var totalPrice = $(this).closest('.subscription-card').find('.total-price').text();
 
                     // Make the API call to buy the subscription
@@ -90,18 +95,21 @@
                             PricePaid: totalPrice
                         },
                         success: function (response) {
-                            setTimeout(function () {
-                                window.location.href = '/';
-                            }, 2000);
+                            //setTimeout(function () {
+                            //    window.location.href = '/';
+                            //}, 2000);
                             toastr.success('Subscription purchased successfully!');
                             // Handle success response
+                           
                         },
                         error: function (xhr, status, error) {
                             console.error('Failed to purchase subscription:', error);
                             // Handle error response
                         }
+
                     });
                 });
+                updateSubscriptionButtons();
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch subscriptions:', error);
@@ -109,5 +117,48 @@
         });
     }
 
-    loadSubscriptionData();
+
+    function GetUserSubscription() {
+        $.ajax({
+            url: '/customer/BuySubscription/GetUserSubscription',
+            method: 'GET',
+            success: function (data) {
+                GlobalVar.UserSubscription = data;
+                    loadSubscriptionData();
+            }
+
+        })
+    }
+    function updateSubscriptionButtons() {
+        debugger
+        if (GlobalVar.UserSubscription) {
+            var button = $(`.buy-now[data-id='${GlobalVar.UserSubscription.subscriptionId}']`);
+            if (button.length) {
+                button.text('Update');
+            }
+        }   
+    }
+    function BuySubscription() {
+        $.ajax({
+            url: '/customer/BuySubscription/Buy',
+            method: 'POST',
+            data: {
+                SubcriptionId: subscriptionId,
+                NoOfMonths: month,
+                PricePaid: totalPrice
+            },
+            success: function (response) {
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 2000);
+                toastr.success('Subscription purchased successfully!');
+                // Handle success response
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to purchase subscription:', error);
+                // Handle error response
+            }
+        });
+    }
+    GetUserSubscription();
 });

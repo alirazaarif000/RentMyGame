@@ -336,6 +336,14 @@
 													 Available Plans
 													</a>
 												</li>
+												@if (SignInManager.IsSignedIn(User))
+										{
+												<li>
+													<a asp-area="Customer" asp-controller="SubscriptionHistory" asp-action="Index">
+														My Subscriptions
+													</a>
+												</li>
+										}
 											</ul>
 										</li>
 									</ul>

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="page-title">
-                    <h2>Manage Games</h2>
+                    <h2>Manage Subscriptions</h2>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -25,16 +25,18 @@
         <div class="row">
             <div class="col-sm-12 table-responsive-xs">
                 <table id="tblData" class="table cart-table">
-                    <thead>
+                    @* <thead>
                         <tr class="table-head">
-                            <th scope="col">image</th>
-                            <th scope="col">Game Name</th>
-                            <th scope="col">Rented Date</th>
-                            <th scope="col">Return Date</th>
+                            <th scope="col">Subscription Name</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
+                    <tbody id="subscriptionList">
+
+                    </tbody> *@
                 </table>
             </div>
         </div>
@@ -43,6 +45,6 @@
 <!--section end-->
 @section Scripts {
     @{
-        <script src="~/jsfiles/rented.js"></script>
+        <script src="~/jsfiles/subscriptionHistory.js"></script>
     }
 }

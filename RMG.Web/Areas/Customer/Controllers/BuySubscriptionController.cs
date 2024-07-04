@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RMG.BLL;
 using RMG.Models;
 using RMG.Models.ViewModels;
@@ -54,6 +55,14 @@ namespace RMG.Web.Areas.Customer.Controllers
 			TempData["error"] = "An error occured";
             return RedirectToAction("Index", "Games");
 		}
+        [Authorize]
+        public IActionResult GetUserSubscription()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            SubscriptionHistory subscription = _subscriptionHistoryBll.GetUserSubscription(userId).Data;
+            return Json(subscription);
+        }
 
 
         //Api's
