@@ -14,6 +14,7 @@ namespace RMG.Utility
         public const string PremiumMax = "Premium Max Package";
 
         public const string ActiveStatus = "Active";
+        public const string RenewedStatus = "Renewed";
         public const string ReturnedStatus = "Returned";
 
         public const string ApprovedReview = "Approved";

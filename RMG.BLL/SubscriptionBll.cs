@@ -123,6 +123,14 @@ namespace RMG.BLL
                 SubscriptionHistory history = _subsHistoryBll.GetUserSubscription(UserId).Data;
                 if (history != null)
                 {
+                    if(sub.SubcriptionId==history.SubscriptionId && history.RemainingMonths ==sub.NoOfMonths)
+                    {
+                        return new Result<object>
+                        {
+                            Status = false,
+                            Message = $"You already have {history.RemainingMonths} month Subscription, Buy More than {history.RemainingMonths}."
+                        };
+                    }
                     if (sub.SubcriptionId < history.SubscriptionId)
                     {
                         List<Rental> rental = _uow.Rental.GetAll(u => u.ApplicationUserId == UserId && u.Status == SD.ActiveStatus).ToList();

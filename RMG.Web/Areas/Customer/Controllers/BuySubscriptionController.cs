@@ -23,7 +23,7 @@ namespace RMG.Web.Areas.Customer.Controllers
             _applicationUserBll = applicationUserBll;
             _subscriptionHistoryBll = subscriptionHistoryBll;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
    //         SubscriptionVM subscriptionVM = new()
@@ -47,7 +47,7 @@ namespace RMG.Web.Areas.Customer.Controllers
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             Result<object> result = _subscriptionBll.BuySubscription(sub, userId);
-            return Json(result.Message);
+            return Json(result);
 		}
         [Authorize]
         public IActionResult GetUserSubscription()
@@ -60,7 +60,7 @@ namespace RMG.Web.Areas.Customer.Controllers
 
 
         //Api's
-
+        [Authorize]
         public IActionResult GetSubscriptionsData()
         {
             List<Subscription> subscriptions = _subscriptionBll.GetAllSubscription().Data;

@@ -258,7 +258,7 @@
 				<div class="col-sm-12">
 					<div class="main-menu">
 						<div class="menu-left">
-							<div class="navbar">
+							@* <div class="navbar">
 								<a href="javascript:void(0)" onclick="openNav()">
 									<div class="bar-style">
 										<i class="fa fa-bars sidebar-bar" aria-hidden="true"></i>
@@ -294,9 +294,9 @@
 										</ul>
 									</nav>
 								</div>
-							</div>
+							</div> *@
 							<div class="brand-logo">
-								<a asp-controller="Games" asp-action="Index">
+								<a asp-area="Customer" asp-controller="Games" asp-action="Index">
 									<img src="~/customer/images/icon/rmg.png" style="height:180px"
 										 class="img-fluid blur-up lazyload" alt="">
 								</a>
@@ -322,30 +322,35 @@
 												<ul>
 													<li>
 														<a asp-area="Customer" asp-controller="Rented" asp-action="Index">
-															Rented
+															Rentals
+														</a>
+													</li>
+													<li>
+														<a asp-area="Customer" asp-controller="Rented" asp-action="RentalHistory">
+															Rented History
 														</a>
 													</li>
 												</ul>
 											</li>
+
+											<li>
+												<a href="#">Subscriptions</a>
+												<ul>
+													<li>
+														<a asp-area="Customer" asp-controller="BuySubscription" asp-action="Index">
+															My Plan
+														</a>
+													</li>
+
+													<li>
+														<a asp-area="Customer" asp-controller="SubscriptionHistory" asp-action="Index">
+															Subscription History
+														</a>
+													</li>
+
+												</ul>
+											</li>
 										}
-										<li>
-											<a href="#">Subscriptions</a>
-											<ul>
-												<li>
-													<a asp-area="Customer" asp-controller="BuySubscription" asp-action="Index">
-													 Available Plans
-													</a>
-												</li>
-												@if (SignInManager.IsSignedIn(User))
-										{
-												<li>
-													<a asp-area="Customer" asp-controller="SubscriptionHistory" asp-action="Index">
-														My Subscriptions
-													</a>
-												</li>
-										}
-											</ul>
-										</li>
 									</ul>
 								</nav>
 							</div>

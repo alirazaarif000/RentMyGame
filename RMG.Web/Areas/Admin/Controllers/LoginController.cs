@@ -29,7 +29,7 @@ namespace RMG.Web.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Genre");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

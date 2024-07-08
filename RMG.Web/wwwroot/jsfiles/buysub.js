@@ -1,4 +1,4 @@
-﻿var GlobalVar = { subscriptions: [], UserSubscription:null}
+﻿var GlobalVar = { subscriptions: [], UserSubscription: null }
 $(document).ready(function () {
     function loadSubscriptionData() {
         $.ajax({
@@ -7,8 +7,9 @@ $(document).ready(function () {
             success: function (data) {
                 GlobalVar.subscriptions = data;
                 var body = $('#subscription');
-
+                body.empty();
                 GlobalVar.subscriptions.forEach(function (sub) {
+                    debugger
                     var html = `
                     <div class="subscription-card shadow p-3 mb-5 bg-white rounded">
                         <div class="compare-part">
@@ -47,7 +48,7 @@ $(document).ready(function () {
                                     <h6>Enter No of Month</h6>
                                 </div>
                                 <div class="inner-detail">
-                                    <input class="form-control month-input" type="number" name="month" data-price="${sub.price}" value="1" min="1" />
+                                    <input class="form-control month-input" type="number" name="month" data-id="${sub.id}" data-price="${sub.price}" value="1" min="1" />
                                 </div>
                             </div>
                             <div class="detail-part">
@@ -55,7 +56,7 @@ $(document).ready(function () {
                                     <h6>Price</h6>
                                 </div>
                                 <div class="inner-detail">
-                                    <h5 class="total-price">${sub.price}</h5>
+                                    <h5 class="total-price" data-id="${sub.id}">${calculateTotalPrice(sub.price, 1, sub.id)}</h5>
                                 </div>
                             </div>
                             <div class="btn-part">
@@ -72,12 +73,14 @@ $(document).ready(function () {
                     var month = $(this).val();
                     if (month < 1 || month === '') {
                         month = 1;
-                        $this.val(1);
+                        $(this).val(1);
                     }
-                        var price = $(this).data('price');
-                        var totalPrice = month * price;
-                        $(this).closest('.subscription-card').find('.total-price').text(totalPrice);
-                    });
+
+                    var price = $(this).data('price');
+                    var subscriptionId = $(this).data('id');
+                    var totalPrice = calculateTotalPrice(price, month, subscriptionId);
+                    $(this).closest('.subscription-card').find('.total-price').text(totalPrice);
+                });
 
                 $('.buy-now').on('click', function () {
                     var subscriptionId = $(this).data('id');
@@ -98,9 +101,17 @@ $(document).ready(function () {
                             //setTimeout(function () {
                             //    window.location.href = '/';
                             //}, 2000);
-                            toastr.success(data.message);
+
+                            if (data.status) {
+                                toastr.success(data.message);
+                                GetUserSubscription();
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+
                             // Handle success response
-                           
+
                         },
                         error: function (xhr, status, error) {
                             console.error('Failed to purchase subscription:', error);
@@ -124,18 +135,19 @@ $(document).ready(function () {
             method: 'GET',
             success: function (data) {
                 GlobalVar.UserSubscription = data;
-                    loadSubscriptionData();
+                loadSubscriptionData();
             }
 
         })
     }
     function updateSubscriptionButtons() {
+        debugger
         if (GlobalVar.UserSubscription) {
             var button = $(`.buy-now[data-id='${GlobalVar.UserSubscription.subscriptionId}']`);
             if (button.length) {
                 button.text('Update');
             }
-        }   
+        }
     }
     function BuySubscription() {
         $.ajax({
@@ -158,6 +170,28 @@ $(document).ready(function () {
                 // Handle error response
             }
         });
+    }
+    function calculateTotalPrice(price, months, subscribedId) {
+        debugger;
+        if (GlobalVar.UserSubscription) {
+            if (GlobalVar.UserSubscription.subscriptionId == subscribedId) {
+                if (months > GlobalVar.UserSubscription.remainingMonths) {
+                    return price * (months-GlobalVar.UserSubscription.remainingMonths);
+                }
+                else {
+                    var remainingMonths = GlobalVar.UserSubscription.remainingMonths;
+                    return (price * months) - (GlobalVar.UserSubscription.subscription.price * remainingMonths);
+                }
+            }
+            else
+            {
+                var remainingMonths = GlobalVar.UserSubscription.remainingMonths - 1;
+                return (price * months) - (GlobalVar.UserSubscription.subscription.price * remainingMonths);
+
+            }
+            
+        }
+        return price * months;
     }
     GetUserSubscription();
 });

@@ -20,6 +20,10 @@ namespace RMG.Web.Areas.Customer.Controllers
 			return View();
 		}
 
+        public IActionResult RentalHistory()
+        {
+            return View();
+        }
         //Api's
         [Authorize]
 		public IActionResult getall()
@@ -33,5 +37,17 @@ namespace RMG.Web.Areas.Customer.Controllers
             }
             return Json(new Rental() { });
         }
-	}
+        [Authorize]
+        public IActionResult getRentalHistory()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Result<List<Rental>> rentals = _rentalBll.GetAllRental(userId, SD.ReturnedStatus);
+            if (rentals.Data != null)
+            {
+                return Json(rentals.Data);
+            }
+            return Json(new Rental() { });
+        }
+    }
 }

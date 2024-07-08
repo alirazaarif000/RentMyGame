@@ -65,6 +65,7 @@ namespace RMG.BLL
                     }
                     else
                     {
+                        subscription.RemainingMonths = 0;
                         subscription.Status = SD.ExpiredSubs;
                     }
                      context.Update(subscription);
@@ -77,8 +78,12 @@ namespace RMG.BLL
                                 && r.RentalDate >= subscription.StartDate
                                 && r.ReturnDate <= subscription.EndDate)
                     .ToList();
-
-                    SubscriptionHistory Currentsubscription = context.SubscriptionsHistory.Where(s => s.Status == SD.ActiveSubs).FirstOrDefault();
+					foreach (var rental in ActiveRents)
+					{
+                        rental.Status = SD.RenewedStatus;
+                    }
+					await context.SaveChangesAsync(stoppingToken);
+					SubscriptionHistory Currentsubscription = context.SubscriptionsHistory.Where(s => s.Status == SD.ActiveSubs).FirstOrDefault();
                     foreach (var rental in ActiveRents)
                     {
                         Rental rent = new()
@@ -92,7 +97,6 @@ namespace RMG.BLL
                         };
                         context.Add(rent);
                     }
-
                         await context.SaveChangesAsync(stoppingToken);
                 }
 

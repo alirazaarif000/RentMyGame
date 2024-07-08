@@ -200,8 +200,7 @@ namespace RMG.BLL
         {
             try
             {
-				var gameResult = GetGame(gameId);
-				Game game = gameResult.Data;
+				Game game = GetGame(gameId).Data;
 				if (game.Stock == 0)
 				{
 					return new Result<object> { Status = false, Message = "Game out of Stock." };
@@ -216,12 +215,15 @@ namespace RMG.BLL
                 List<Rental> activeRentGames = rentGames.Where(r => r.Status == SD.ActiveStatus &&
                                       r.ReturnDate >= subscription.StartDate &&
                                       r.ReturnDate <= subscription.EndDate).ToList();
-                DateOnly past3M = DateOnly.FromDateTime(DateTime.Now.AddMonths(-3));
+				List<Rental> allReturnedGames = rentGames.Where(r => r.Status == SD.ReturnedStatus &&
+									 r.ReturnDate >= subscription.StartDate &&
+									 r.ReturnDate <= subscription.EndDate).ToList();
+				DateOnly past3M = DateOnly.FromDateTime(DateTime.Now.AddMonths(-3));
 
                 switch (subscription.Subscription.PackageName)
                 {
                     case SD.Basic:
-                        if (activeRentGames.Count >= 2)
+                        if (activeRentGames.Count >= 2 || allReturnedGames.Count >= 2)
                         {
                             return new Result<object> { Status = false, Message = "You have reached the rental limit for Basic subscription." };
                         }
@@ -232,7 +234,7 @@ namespace RMG.BLL
                         break;
 
                     case SD.Premium:
-                        if (activeRentGames.Count >= 2)
+                        if (activeRentGames.Count >= 2 || allReturnedGames.Count >= 4)
                         {
                             return new Result<object> { Status = false, Message = "You have reached the rental limit for Premium subscription." };
                         }
@@ -250,7 +252,7 @@ namespace RMG.BLL
                         break;
 
                     case SD.PremiumMax:
-                        if (activeRentGames.Count >= 3 )
+                        if (activeRentGames.Count >= 3 || allReturnedGames.Count >= 6)
                         {
                             return new Result<object> { Status = false, Message = "You have reached the rental limit for PremiumMax subscription." };
                         }
@@ -270,7 +272,6 @@ namespace RMG.BLL
                         return new Result<object> { Status = false, Message = "Invalid subscription package." };
                 }
 
-                // Logic to rent the game
                 Rental newRental = new Rental
                 {
                     ApplicationUserId = id,
@@ -301,50 +302,13 @@ namespace RMG.BLL
                 {
                     return new Result<object> { Status = false, Message = "User does not have an active subscription." };
                 }
-
-				Result<List<Rental>> rentGamesResult = _rentalBll.GetAllRental(id);
-				if (!rentGamesResult.Status)
-				{
-					return new Result<object> { Status = false, Message = "Error retrieving rentals." };
-				}
                 Rental returnGame= _rentalBll.GetRentalByUser(id, gameId, SD.ActiveStatus).Data;
-				List<Rental> rentGames = rentGamesResult.Data ?? new List<Rental>();
-                List<Rental> allReturnedGames = rentGames.Where(r => r.Status == SD.ReturnedStatus &&
-                                                     r.ReturnDate >= subscription.StartDate &&
-                                                     r.ReturnDate <= subscription.EndDate).ToList();
+				Game game = GetGame(gameId).Data;
 
-                var gameResult = GetGame(gameId);
-				if (!gameResult.Status)
-				{
-					return new Result<object> { Status = false, Message = "Game not found." };
-				}
-				Game game = gameResult.Data;
-
-				switch (subscription.Subscription.PackageName)
-				{
-					case SD.Basic:
-						return new Result<object> { Status = false, Message = "Replace or Return Game are not allowed in Basic subscription." };
-
-					case SD.Premium:
-                        if(allReturnedGames.Count >= 2)
-                        {
-							return new Result<object> { Status = false, Message = "Cannot Replace or Return more than 2 Games in Premium subscription." };
-						}
-						break;
-					case SD.PremiumMax:
-						if (allReturnedGames.Count >= 3)
-						{
-							return new Result<object> { Status = false, Message = "Cannot Replace or Return more than 3 Games in Premium subscription." };
-						}
-						break;
-
-					default:
-						return new Result<object> { Status = false, Message = "Invalid subscription package." };
-				}
                 returnGame.Status=SD.ReturnedStatus;
                 returnGame.ReturnDate= DateTime.Now;
 				_rentalBll.UpdateRental(returnGame);
-                game.Stock += game.Stock;
+                game.Stock += 1;
                 UpdateGame(game);
 				return new Result<object> { Status = true, Message = "Game Returned successfully.", Data = returnGame };
 			}
